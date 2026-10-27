@@ -1,0 +1,263 @@
+.root {
+  --loader-ease-in: cubic-bezier(0.55, 0.085, 0.68, 0.53);
+  --loader-ease-out: cubic-bezier(0.55, 0.085, 0.07, 0.77);
+
+  display: grid;
+  place-items: center;
+  width: 100%;
+  min-height: 100%;
+  background: var(--color-bg-page);
+}
+
+.fullscreen {
+  min-height: 100dvh;
+}
+
+.icon {
+  width: calc(var(--size-logo-md) * 4 / 3);
+  height: calc(var(--size-logo-md) * 4 / 3);
+}
+
+.set {
+  visibility: hidden;
+}
+
+.active {
+  visibility: visible;
+}
+
+.glyphA {
+  fill: var(--color-accent);
+}
+
+.glyphD {
+  fill: transparent;
+  transform: translate(-24px, 36px);
+}
+
+.brick {
+  fill: var(--color-accent);
+  stroke: transparent;
+}
+
+.brickRotate {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.line {
+  stroke: var(--color-bg-page);
+  stroke-width: 0;
+  transform-origin: center;
+}
+
+.verticalLine {
+  stroke: var(--color-bg-page);
+  stroke-width: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .active .glyphA {
+    animation:
+      glyph-a-out 0.56s var(--loader-ease-out) 0.4s forwards,
+      glyph-a-in 0.56s var(--loader-ease-out) 3.2s forwards;
+  }
+
+  .active .glyphD {
+    animation:
+      glyph-d-in 0.3s var(--loader-ease-out) 1.28s forwards,
+      glyph-d-out 0.3s var(--loader-ease-out) 2.58s forwards;
+  }
+
+  .active .brick {
+    animation:
+      brick-up 0.56s var(--loader-ease-out) 0.4s forwards,
+      brick-down 0.56s var(--loader-ease-out) 3.2s forwards;
+  }
+
+  .active .brickRotate {
+    animation:
+      brick-rotate 0.3s var(--loader-ease-in) 0.98s forwards,
+      brick-move 0.3s var(--loader-ease-out) 1.28s forwards,
+      brick-move-back 0.3s var(--loader-ease-out) 2.58s forwards,
+      brick-rotate-back 0.3s ease-in 2.9s forwards;
+  }
+
+  .active .line {
+    animation:
+      line-grow 0.56s var(--loader-ease-out) 0.4s forwards,
+      line-shrink 0.56s var(--loader-ease-out) 3.2s forwards;
+  }
+
+  .active .verticalLine {
+    animation:
+      vertical-line-grow 0.3s var(--loader-ease-out) 1.28s forwards,
+      vertical-line-shrink 0.3s var(--loader-ease-out) 2.58s forwards;
+  }
+}
+
+@keyframes glyph-a-out {
+  0% {
+    transform: translate(0);
+  }
+
+  99% {
+    fill: var(--color-accent);
+  }
+
+  100% {
+    fill: transparent;
+    transform: translateY(80px);
+  }
+}
+
+@keyframes glyph-a-in {
+  0% {
+    fill: var(--color-accent);
+    transform: translateY(80px);
+  }
+
+  100% {
+    fill: var(--color-accent);
+    transform: translate(0);
+  }
+}
+
+@keyframes glyph-d-in {
+  0% {
+    fill: var(--color-accent);
+  }
+
+  100% {
+    fill: var(--color-accent);
+    transform: translate(26px, 36px);
+  }
+}
+
+@keyframes glyph-d-out {
+  0% {
+    fill: var(--color-accent);
+    transform: translate(26px, 36px);
+  }
+
+  99% {
+    fill: var(--color-accent);
+  }
+
+  100% {
+    fill: transparent;
+    transform: translate(-24px, 36px);
+  }
+}
+
+@keyframes brick-up {
+  0% {
+    transform: translate(0);
+  }
+
+  100% {
+    transform: translateY(-58px);
+  }
+}
+
+@keyframes brick-down {
+  0% {
+    transform: translateY(-58px);
+  }
+
+  100% {
+    transform: translate(0);
+  }
+}
+
+@keyframes brick-rotate {
+  to {
+    transform: rotate(90deg);
+  }
+}
+
+@keyframes brick-move {
+  0% {
+    transform: rotate(90deg);
+  }
+
+  100% {
+    transform: translate(-46px) rotate(90deg);
+  }
+}
+
+@keyframes brick-move-back {
+  0% {
+    transform: translate(-46px) rotate(90deg);
+  }
+
+  100% {
+    transform: rotate(90deg);
+  }
+}
+
+@keyframes brick-rotate-back {
+  0% {
+    transform: rotate(90deg);
+  }
+
+  100% {
+    transform: rotate(180deg);
+  }
+}
+
+@keyframes line-grow {
+  0% {
+    stroke-width: 40px;
+  }
+
+  99% {
+    stroke-width: 156px;
+  }
+
+  100% {
+    stroke-width: 0;
+  }
+}
+
+@keyframes line-shrink {
+  0% {
+    stroke-width: 156px;
+  }
+
+  99% {
+    stroke-width: 40px;
+  }
+
+  100% {
+    stroke-width: 0;
+  }
+}
+
+@keyframes vertical-line-grow {
+  0% {
+    stroke-width: 116px;
+  }
+
+  99% {
+    stroke-width: 24px;
+  }
+
+  100% {
+    stroke-width: 0;
+  }
+}
+
+@keyframes vertical-line-shrink {
+  0% {
+    stroke-width: 24px;
+  }
+
+  99% {
+    stroke-width: 116px;
+  }
+
+  100% {
+    stroke-width: 0;
+  }
+}

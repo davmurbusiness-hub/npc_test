@@ -1,0 +1,35 @@
+@use 'breakpoints';
+
+.root {
+  position: relative;
+  display: inline-grid;
+  flex-shrink: 0;
+  place-items: center;
+  overflow: hidden;
+  border-radius: var(--radius-full);
+  background: var(--color-bg-inverted);
+  color: var(--color-text-inverted);
+  font-weight: var(--font-weight-semibold);
+
+  @include breakpoints.forced-colors-boundary;
+}
+
+.sm {
+  inline-size: var(--control-height-sm);
+  block-size: var(--control-height-sm);
+  font-size: var(--font-size-sm);
+}
+
+.lg {
+  inline-size: var(--control-height-lg);
+  block-size: var(--control-height-lg);
+  font-size: var(--font-size-xl);
+}
+
+.image {
+  position: absolute;
+  inset: 0;
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: cover;
+}

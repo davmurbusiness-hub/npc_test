@@ -1,0 +1,36 @@
+.root {
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.primary {
+  color: var(--text-color-primary);
+}
+
+.secondary {
+  color: var(--text-color-secondary);
+}
+
+.tertiary {
+  color: var(--text-color-tertiary);
+}
+
+.info {
+  color: var(--text-color-info);
+}
+
+.positive {
+  color: var(--text-color-positive);
+}
+
+.warning {
+  color: var(--text-color-warning);
+}
+
+.negative {
+  color: var(--text-color-negative);
+}
+
+.accent {
+  color: var(--text-color-accent);
+}

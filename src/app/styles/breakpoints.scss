@@ -1,0 +1,124 @@
+$desktop-min: 768px;
+
+@mixin mobile {
+  @media (width < #{$desktop-min}) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media (width >= #{$desktop-min}) {
+    @content;
+  }
+}
+
+$compact-max: 1024px;
+
+@mixin compact {
+  @media (width >= #{$desktop-min}) and (width < #{$compact-max}) {
+    @content;
+  }
+}
+
+@mixin spacious {
+  @media (width >= #{$compact-max}) {
+    @content;
+  }
+}
+
+$wide-min: 1100px;
+
+@mixin wide {
+  @media (width >= #{$wide-min}) {
+    @content;
+  }
+}
+
+$tall-min: 880px;
+$short-max: 800px;
+
+@mixin tall {
+  @media (height >= #{$tall-min}) {
+    @content;
+  }
+}
+
+@mixin short {
+  @media (height < #{$short-max}) {
+    @content;
+  }
+}
+
+$fit-min: 560px;
+
+@mixin fit-screen {
+  @media (width >= #{$desktop-min}) and (height >= #{$fit-min}) {
+    @content;
+  }
+}
+
+$table-stack-max: 720px;
+
+@mixin narrow-container {
+  @container (width < #{$table-stack-max}) {
+    @content;
+  }
+}
+
+$split-container-min: 600px;
+
+@mixin wide-container {
+  @container (width >= #{$split-container-min}) {
+    @content;
+  }
+}
+
+@mixin touch {
+  @media (pointer: coarse), (width < #{$desktop-min}) {
+    @content;
+  }
+}
+
+@mixin hover {
+  @media (hover: hover) {
+    @content;
+  }
+}
+
+@mixin visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+@mixin forced-colors-selected {
+  @media (forced-colors: active) {
+    forced-color-adjust: none;
+    color: highlighttext;
+    background-color: highlight;
+  }
+}
+
+@mixin forced-colors-disabled {
+  @media (forced-colors: active) {
+    opacity: 0.5;
+  }
+}
+
+@mixin forced-colors-boundary {
+  @media (forced-colors: active) {
+    border: var(--border-width) solid buttontext;
+  }
+}
+
+@mixin forced-colors-solid-text {
+  @media (forced-colors: active) {
+    color: inherit;
+    background: none;
+  }
+}

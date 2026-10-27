@@ -1,0 +1,26 @@
+@use 'breakpoints';
+
+.root {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.list {
+  display: grid;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.item {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.srOnly {
+  @include breakpoints.visually-hidden;
+}

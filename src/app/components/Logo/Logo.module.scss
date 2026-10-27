@@ -1,0 +1,41 @@
+.root {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.mark {
+  flex: none;
+}
+
+.sm .mark {
+  width: var(--size-logo-sm);
+  height: var(--size-logo-sm);
+}
+
+.md .mark {
+  width: var(--size-logo-md);
+  height: var(--size-logo-md);
+}
+
+.markBg {
+  fill: var(--color-brand-logo);
+}
+
+.markGlyph {
+  fill: var(--color-on-accent);
+}
+
+.wordmark {
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+  white-space: nowrap;
+}
+
+.sm .wordmark {
+  font-size: var(--font-size-md);
+}
+
+.md .wordmark {
+  font-size: var(--font-size-xl);
+}

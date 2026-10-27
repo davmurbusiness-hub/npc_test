@@ -1,0 +1,95 @@
+@use 'breakpoints';
+
+.root {
+  display: inline-grid;
+  flex-shrink: 0;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition:
+    background-color var(--duration-fast) var(--easing),
+    color var(--duration-fast) var(--easing);
+
+  @include breakpoints.forced-colors-boundary;
+
+  &:focus-visible {
+    outline: var(--focus-ring-width) solid var(--color-focus-ring);
+    outline-offset: var(--focus-ring-offset);
+  }
+
+  &:disabled {
+    cursor: default;
+    color: var(--color-text-disabled);
+
+    @include breakpoints.forced-colors-disabled;
+  }
+
+  &[aria-disabled='true'] {
+    cursor: not-allowed;
+
+    > * {
+      opacity: 0.5;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
+.sm {
+  width: var(--control-height-sm);
+  height: var(--control-height-sm);
+
+  @include breakpoints.touch {
+    width: var(--size-target-touch);
+    height: var(--size-target-touch);
+  }
+}
+
+.md {
+  width: var(--control-height-md);
+  height: var(--control-height-md);
+}
+
+.ghost {
+  color: var(--color-text-secondary);
+  background: transparent;
+
+  @include breakpoints.hover {
+    &:hover:not(:disabled, [aria-disabled='true'], [aria-pressed='true']) {
+      color: var(--color-text-primary);
+      background: var(--color-bg-hover);
+    }
+  }
+}
+
+.secondary {
+  color: var(--color-text-primary);
+  background: var(--color-bg-muted);
+
+  &:disabled {
+    background: var(--color-bg-disabled);
+  }
+
+  @include breakpoints.hover {
+    &:hover:not(:disabled, [aria-disabled='true'], [aria-pressed='true']) {
+      background: var(--color-bg-hover);
+    }
+  }
+}
+
+.root:active:not(:disabled, [aria-disabled='true'], [aria-pressed='true']) {
+  color: var(--color-text-primary);
+  background: var(--color-bg-pressed);
+}
+
+.root[aria-pressed='true'] {
+  color: var(--color-text-primary);
+  background: var(--color-bg-active);
+  box-shadow: inset 0 0 0 var(--border-width) var(--color-text-secondary);
+
+  @include breakpoints.forced-colors-selected;
+}

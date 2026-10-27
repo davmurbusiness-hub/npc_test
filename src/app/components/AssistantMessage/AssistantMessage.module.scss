@@ -1,0 +1,37 @@
+@use 'breakpoints';
+
+.root {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-4);
+  min-width: 0;
+  padding: var(--space-5);
+  border-radius: var(--radius-lg);
+  background-color: var(--color-bg-surface);
+  box-shadow: var(--shadow-sm);
+
+  @include breakpoints.mobile {
+    padding: var(--space-4);
+  }
+}
+
+.stop {
+  justify-self: start;
+}
+
+.stopped {
+  justify-self: start;
+}
+
+.retry {
+  justify-self: start;
+}
+
+.footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+  padding-top: var(--space-3);
+  border-top: var(--border-width) solid var(--color-border);
+}

@@ -1,0 +1,60 @@
+@use 'breakpoints';
+
+.root {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: var(--space-3);
+  align-items: start;
+  min-width: 0;
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  color: var(--color-text-primary);
+
+  @include breakpoints.forced-colors-boundary;
+
+  @include breakpoints.mobile {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+}
+
+.info {
+  border-color: var(--color-info);
+  background-color: var(--color-info-bg);
+}
+
+.warning {
+  border-color: var(--color-warning);
+  background-color: var(--color-warning-bg);
+}
+
+.negative {
+  border-color: var(--color-negative);
+  background-color: var(--color-negative-bg);
+}
+
+.icon {
+  display: flex;
+}
+
+.info .icon {
+  color: var(--color-info);
+}
+
+.warning .icon {
+  color: var(--color-warning);
+}
+
+.negative .icon {
+  color: var(--color-negative);
+}
+
+.content {
+  min-width: 0;
+}
+
+.action {
+  @include breakpoints.mobile {
+    grid-column: 2;
+  }
+}

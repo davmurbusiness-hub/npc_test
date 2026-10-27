@@ -1,0 +1,61 @@
+@use 'breakpoints';
+
+.root {
+  --card-border: var(--color-ad-border);
+  --card-label-bg: var(--color-ad-bg);
+  --card-label-color: var(--color-ad);
+
+  display: grid;
+
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-2);
+  padding: var(--space-4);
+  border: var(--border-width) solid var(--card-border);
+  border-radius: var(--radius-md);
+  background: var(--color-bg-surface);
+
+  @include breakpoints.mobile {
+    padding: var(--space-3);
+  }
+}
+
+.ad {
+  --card-border: var(--color-ad-border);
+  --card-label-bg: var(--color-ad-bg);
+  --card-label-color: var(--color-ad);
+}
+
+.news {
+  --card-border: var(--color-info);
+  --card-label-bg: var(--color-info-bg);
+  --card-label-color: var(--color-info);
+}
+
+.important {
+  --card-border: var(--color-warning);
+  --card-label-bg: var(--color-warning-bg);
+  --card-label-color: var(--color-warning);
+}
+
+.info {
+  --card-border: var(--color-border-strong);
+  --card-label-bg: var(--color-bg-muted);
+  --card-label-color: var(--color-text-primary);
+}
+
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.label {
+  padding: var(--space-0-5) var(--space-2);
+  border-radius: var(--radius-xs);
+  background: var(--card-label-bg);
+  color: var(--card-label-color);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-tight);
+}

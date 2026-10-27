@@ -1,0 +1,5 @@
+@use 'breakpoints';
+
+.root {
+  @include breakpoints.visually-hidden;
+}

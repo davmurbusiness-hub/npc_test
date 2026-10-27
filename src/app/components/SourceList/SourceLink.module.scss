@@ -1,0 +1,35 @@
+@use 'breakpoints';
+
+.root {
+  display: inline;
+  overflow-wrap: anywhere;
+}
+
+.link {
+  color: var(--color-link);
+  text-decoration: underline;
+  text-underline-offset: var(--space-0-5);
+
+  @include breakpoints.hover {
+    &:hover {
+      color: var(--color-link-hover);
+    }
+  }
+
+  &:focus-visible {
+    outline: var(--focus-ring-width) solid var(--color-focus-ring);
+    outline-offset: var(--focus-ring-offset);
+  }
+}
+
+.icon {
+  margin-inline-start: var(--space-1);
+}
+
+.badge {
+  margin-inline-start: var(--space-1);
+}
+
+.srOnly {
+  @include breakpoints.visually-hidden;
+}

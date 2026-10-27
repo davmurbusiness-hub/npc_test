@@ -1,0 +1,156 @@
+@use 'breakpoints';
+
+.root {
+  display: grid;
+  gap: var(--space-3);
+  min-width: 0;
+}
+
+.switch {
+  justify-self: start;
+}
+
+.chart {
+  display: grid;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+.head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(8ch, 16ch) minmax(0, 1fr);
+  gap: var(--space-2);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-xs);
+
+  > :first-child {
+    text-align: end;
+  }
+
+  @include breakpoints.mobile {
+    grid-template-columns: minmax(0, 1fr) minmax(8ch, 12ch) minmax(0, 1fr);
+  }
+}
+
+.rows {
+  display: grid;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(8ch, 16ch) minmax(0, 1fr);
+  grid-template-areas: 'left name right';
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-1) 0;
+  border-block-end: var(--border-width) solid var(--chart-grid);
+
+  @include breakpoints.mobile {
+    grid-template-columns: minmax(0, 1fr) minmax(8ch, 12ch) minmax(0, 1fr);
+  }
+}
+
+.active {
+  margin-inline-start: calc(-1 * var(--border-width-accent));
+  background: var(--color-bg-muted);
+  border-inline-start: var(--border-width-accent) solid var(--color-text-primary);
+}
+
+.name {
+  grid-area: name;
+  min-width: 0;
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+
+.left {
+  grid-area: left;
+}
+
+.right {
+  grid-area: right;
+}
+
+.side {
+  display: grid;
+  align-items: center;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.left.side {
+  grid-template-areas: 'value track';
+  grid-template-columns: auto minmax(0, 1fr);
+
+  @include breakpoints.mobile {
+    grid-template-areas: 'value' 'track';
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-1);
+  }
+}
+
+.right.side {
+  grid-template-areas: 'track value';
+  grid-template-columns: minmax(0, 1fr) auto;
+
+  @include breakpoints.mobile {
+    grid-template-areas: 'value' 'track';
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-1);
+  }
+}
+
+.track {
+  display: flex;
+  grid-area: track;
+  block-size: var(--space-3);
+  min-width: 0;
+}
+
+.left .track {
+  justify-content: end;
+}
+
+.right .track {
+  justify-content: start;
+}
+
+.bar {
+  box-sizing: border-box;
+  inline-size: calc(var(--share) * 100%);
+  min-inline-size: var(--space-0-5);
+  block-size: 100%;
+  border: var(--border-width) solid transparent;
+  border-radius: var(--radius-sm);
+}
+
+.barLeft {
+  --share: var(--left-share);
+
+  background: var(--chart-outgoing);
+}
+
+.barRight {
+  --share: var(--right-share);
+
+  background: var(--chart-incoming);
+}
+
+.value {
+  grid-area: value;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-xs);
+  white-space: nowrap;
+}
+
+.left .value {
+  text-align: end;
+}
+
+.srOnly {
+  @include breakpoints.visually-hidden;
+}

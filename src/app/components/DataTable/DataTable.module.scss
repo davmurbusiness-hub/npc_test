@@ -1,0 +1,122 @@
+@use 'breakpoints';
+
+.root {
+  position: relative;
+  max-width: 100%;
+  overflow-x: auto;
+
+  &:focus-visible {
+    outline: var(--focus-ring-width) solid var(--color-focus-ring);
+    outline-offset: var(--focus-ring-offset);
+  }
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--font-size-sm);
+}
+
+.caption {
+  padding-bottom: var(--space-2);
+  font-weight: var(--font-weight-semibold);
+  text-align: start;
+}
+
+.captionHidden {
+  @include breakpoints.visually-hidden;
+}
+
+.th {
+  padding: var(--space-2) var(--space-3);
+  background-color: var(--color-bg-muted);
+  color: var(--color-text-secondary);
+  font-weight: var(--font-weight-medium);
+  white-space: nowrap;
+}
+
+.td {
+  padding: var(--space-2) var(--space-3);
+  border-bottom: var(--border-width) solid var(--color-border);
+}
+
+.start {
+  overflow-wrap: break-word;
+  text-align: start;
+}
+
+.end {
+  font-variant-numeric: tabular-nums;
+  text-align: end;
+  white-space: nowrap;
+}
+
+.empty {
+  color: var(--color-text-tertiary);
+  text-align: center;
+}
+
+@include breakpoints.mobile {
+  .th,
+  .td {
+    padding: var(--space-2);
+  }
+}
+
+.stack {
+  container-type: inline-size;
+}
+
+@include breakpoints.narrow-container {
+  .stack thead {
+    @include breakpoints.visually-hidden;
+  }
+
+  .stack .table,
+  .stack tbody {
+    display: block;
+  }
+
+  .stack .caption {
+    display: block;
+  }
+
+  .stack .td:empty {
+    display: none;
+  }
+
+  .stack tr {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(16ch, 1fr));
+    gap: var(--space-3);
+    padding-block: var(--space-3);
+    border-bottom: var(--border-width) solid var(--color-border);
+  }
+
+  .stack .td {
+    padding: 0;
+    border-bottom: 0;
+    text-align: start;
+  }
+
+  .stack .td[data-label]::before {
+    content: attr(data-label) / '';
+    display: block;
+    margin-bottom: var(--space-0-5);
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-xs);
+    white-space: nowrap;
+  }
+
+  .stack .td[data-label]:has(> :is(a, button):only-child)::before {
+    content: none;
+  }
+
+  .stack .td:first-child {
+    grid-column: 1 / -1;
+  }
+
+  .stack .empty {
+    text-align: center;
+  }
+}

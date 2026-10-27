@@ -1,0 +1,152 @@
+@use 'breakpoints';
+
+.root {
+  flex-shrink: 0;
+  max-width: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  cursor: pointer;
+  border: 0;
+  transition:
+    background-color var(--duration-fast) var(--easing),
+    transform var(--duration-fast) var(--easing);
+
+  &:focus-visible {
+    outline: var(--focus-ring-width) solid var(--color-focus-ring);
+    outline-offset: var(--focus-ring-offset);
+  }
+
+  &:active:not(:disabled, [aria-disabled='true']) {
+    transform: scale(0.96);
+    transition-duration: 0s;
+  }
+
+  &:disabled,
+  &[aria-disabled='true'] {
+    cursor: default;
+  }
+
+  &:disabled {
+    color: var(--color-text-disabled);
+    background-color: var(--color-bg-disabled);
+
+    @include breakpoints.forced-colors-disabled;
+  }
+
+  &[aria-disabled='true']:not([aria-busy='true']) {
+    cursor: not-allowed;
+
+    > * {
+      opacity: 0.5;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+
+  @include breakpoints.forced-colors-boundary;
+}
+
+.link {
+  text-decoration: none;
+}
+
+.primary {
+  color: var(--color-on-accent);
+  background-color: var(--color-accent);
+
+  @include breakpoints.hover {
+    &:hover:not(:disabled, [aria-disabled='true']) {
+      background-color: var(--color-accent-hover);
+    }
+  }
+
+  &:active:not(:disabled, [aria-disabled='true']) {
+    background-color: var(--color-accent-active);
+  }
+}
+
+.secondary {
+  color: var(--color-text-primary);
+  background-color: var(--color-bg-muted);
+
+  @include breakpoints.hover {
+    &:hover:not(:disabled, [aria-disabled='true']) {
+      background-color: var(--color-bg-hover);
+    }
+  }
+
+  &:active:not(:disabled, [aria-disabled='true']) {
+    background-color: var(--color-bg-pressed);
+  }
+}
+
+.ghost {
+  color: var(--color-text-primary);
+  background-color: transparent;
+
+  &:disabled {
+    background-color: transparent;
+  }
+
+  @include breakpoints.hover {
+    &:hover:not(:disabled, [aria-disabled='true']) {
+      background-color: var(--color-bg-hover);
+    }
+  }
+
+  &:active:not(:disabled, [aria-disabled='true']) {
+    background-color: var(--color-bg-pressed);
+  }
+}
+
+.sm {
+  gap: var(--space-1);
+  min-height: var(--control-height-sm);
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-sm);
+
+  @include breakpoints.touch {
+    min-height: var(--size-target-touch);
+  }
+}
+
+.md {
+  gap: var(--space-2);
+  min-height: var(--control-height-md);
+  padding: var(--space-2) var(--space-5);
+  border-radius: var(--radius-md);
+}
+
+.lg {
+  gap: var(--space-3);
+  min-height: var(--control-height-lg);
+  padding: var(--space-3) var(--space-8);
+  border-radius: var(--radius-lg);
+}
+
+@mixin pressed {
+  color: var(--color-text-primary);
+  background-color: var(--color-bg-active);
+
+  @include breakpoints.forced-colors-selected;
+}
+
+.root[aria-pressed='true'],
+.root[aria-pressed='true']:active:not(:disabled, [aria-disabled='true']) {
+  @include pressed;
+}
+
+@include breakpoints.hover {
+  .root[aria-pressed='true']:hover:not(:disabled, [aria-disabled='true']) {
+    @include pressed;
+  }
+}
+
+.root .label {
+  line-height: var(--line-height-tight);
+  overflow-wrap: break-word;
+}

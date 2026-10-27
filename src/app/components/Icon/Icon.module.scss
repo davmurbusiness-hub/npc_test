@@ -1,0 +1,70 @@
+.root {
+  flex-shrink: 0;
+  width: var(--icon-size);
+  height: var(--icon-size);
+
+  vertical-align: middle;
+  vertical-align: calc((1cap - var(--icon-size)) / 2);
+}
+
+.sm {
+  --icon-size: var(--size-icon-sm);
+}
+
+.md {
+  --icon-size: var(--size-icon-md);
+}
+
+.lg {
+  --icon-size: var(--size-icon-lg);
+}
+
+.primary {
+  color: var(--text-color-primary);
+}
+
+.secondary {
+  color: var(--text-color-secondary);
+}
+
+.tertiary {
+  color: var(--text-color-tertiary);
+}
+
+.inverted {
+  color: var(--text-color-inverted);
+}
+
+.link {
+  color: var(--text-color-link);
+}
+
+.positive {
+  color: var(--text-color-positive);
+}
+
+.negative {
+  color: var(--text-color-negative);
+}
+
+.warning {
+  color: var(--text-color-warning);
+}
+
+.info {
+  color: var(--text-color-info);
+}
+
+.spin {
+  animation: spin var(--duration-spin) linear infinite;
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

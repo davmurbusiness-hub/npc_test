@@ -1,0 +1,75 @@
+@use 'breakpoints';
+
+.root {
+  min-width: 0;
+}
+
+.list {
+  display: grid;
+  gap: var(--space-2);
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.step {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: var(--space-2);
+  align-items: center;
+}
+
+.marker {
+  display: flex;
+  color: var(--color-positive);
+}
+
+.current .marker {
+  color: var(--color-info);
+}
+
+.retry .marker {
+  color: var(--color-warning);
+}
+
+.pending .marker {
+  color: var(--color-text-tertiary);
+}
+
+.current .title {
+  justify-self: start;
+  color: var(--color-text-primary);
+
+  @media (prefers-reduced-motion: no-preference) {
+    color: transparent;
+    background-image: linear-gradient(
+      90deg,
+      var(--color-text-primary),
+      var(--color-text-tertiary),
+      var(--color-text-primary)
+    );
+    background-size: 200% 100%;
+    background-clip: text;
+    animation: shimmer var(--duration-loop) linear infinite;
+  }
+
+  @media (forced-colors: active) {
+    color: canvastext;
+    background-image: none;
+    animation: none;
+  }
+}
+
+.srOnly {
+  @include breakpoints.visually-hidden;
+}
+
+@keyframes shimmer {
+  from {
+    background-position: 200% 0;
+  }
+
+  to {
+    background-position: 0 0;
+  }
+}

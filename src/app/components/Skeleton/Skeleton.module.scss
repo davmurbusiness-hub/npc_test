@@ -1,0 +1,77 @@
+@mixin shimmer {
+  background-color: var(--color-skeleton);
+  background-image: linear-gradient(
+    90deg,
+    var(--color-skeleton),
+    var(--color-skeleton-highlight),
+    var(--color-skeleton)
+  );
+  background-size: 200% 100%;
+  animation: shimmer var(--duration-loop) linear infinite;
+
+  @media (prefers-reduced-motion: reduce) {
+    background-image: none;
+    animation: none;
+  }
+}
+
+.root {
+  width: var(--skeleton-width, 100%);
+  min-width: 0;
+}
+
+.text {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-2);
+}
+
+.line {
+  @include shimmer;
+
+  display: block;
+  height: var(--font-size-md);
+  border-radius: var(--radius-xs);
+}
+
+.line:last-child:not(:first-child) {
+  width: 60%;
+}
+
+.block {
+  @include shimmer;
+
+  height: var(--skeleton-size);
+  border-radius: var(--radius-md);
+}
+
+.circle {
+  @include shimmer;
+
+  flex-shrink: 0;
+  width: var(--skeleton-size);
+  height: var(--skeleton-size);
+  border-radius: var(--radius-full);
+}
+
+.heightSm {
+  --skeleton-size: var(--control-height-sm);
+}
+
+.heightMd {
+  --skeleton-size: var(--control-height-md);
+}
+
+.heightLg {
+  --skeleton-size: var(--control-height-lg);
+}
+
+@keyframes shimmer {
+  from {
+    background-position: 200% 0;
+  }
+
+  to {
+    background-position: 0 0;
+  }
+}

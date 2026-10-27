@@ -1,0 +1,164 @@
+@use 'breakpoints';
+
+.root {
+  display: grid;
+  gap: var(--space-3);
+  min-width: 0;
+}
+
+.switch {
+  justify-self: start;
+}
+
+.figure {
+  display: grid;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.plot {
+  position: relative;
+  min-width: 0;
+  aspect-ratio: 16 / 9;
+  color: var(--chart-grid);
+
+  @include breakpoints.mobile {
+    aspect-ratio: 4 / 3;
+  }
+}
+
+.incoming {
+  color: var(--chart-incoming);
+}
+
+.outgoing {
+  color: var(--chart-outgoing);
+}
+
+.series {
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+.points {
+  pointer-events: none;
+}
+
+.annotation {
+  pointer-events: none;
+}
+
+.marker {
+  fill: var(--color-bg-surface);
+  stroke: currentcolor;
+  stroke-width: var(--size-chart-stroke);
+}
+
+.tick {
+  fill: var(--color-text-tertiary);
+  font-size: var(--font-size-xs);
+}
+
+.annotationText {
+  fill: var(--color-text-secondary);
+  font-size: var(--font-size-xs);
+  paint-order: stroke;
+  stroke: var(--color-bg-surface);
+  stroke-width: var(--size-chart-halo);
+  stroke-linejoin: round;
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.legendItem {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.legendValues {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-xs);
+}
+
+.swatch {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.sample {
+  inline-size: var(--space-6);
+  border-block-start: var(--size-chart-stroke) solid currentcolor;
+}
+
+.dashed {
+  border-block-start-style: dashed;
+}
+
+.sampleMarker {
+  box-sizing: border-box;
+  inline-size: var(--size-chart-marker);
+  block-size: var(--size-chart-marker);
+  background: var(--color-bg-surface);
+  border: var(--size-chart-stroke) solid currentcolor;
+}
+
+.circle {
+  border-radius: 50%;
+}
+
+.square {
+  border-radius: 0;
+}
+
+.tooltip {
+  max-inline-size: var(--size-tooltip-width);
+  padding: var(--space-2) var(--space-3);
+  color: var(--color-text-primary);
+  background: var(--color-bg-surface);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-md);
+  font-size: var(--font-size-xs);
+}
+
+.tooltipTitle {
+  margin: 0 0 var(--space-1);
+}
+
+.tooltipList {
+  display: grid;
+  gap: var(--space-1);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tooltipItem {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+@media (forced-colors: active) {
+  .series,
+  .marker,
+  .swatch {
+    color: CanvasText;
+  }
+
+  .annotationText {
+    stroke: Canvas;
+  }
+}

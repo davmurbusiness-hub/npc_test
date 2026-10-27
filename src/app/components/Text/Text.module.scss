@@ -1,0 +1,152 @@
+.root {
+  min-width: 0;
+  margin: 0;
+  font-family: var(--font-family-base);
+  line-height: var(--line-height-normal);
+  overflow-wrap: anywhere;
+
+  white-space: pre-line;
+
+  &:focus-visible {
+    outline: var(--focus-ring-width) solid var(--color-focus-ring);
+    outline-offset: var(--focus-ring-offset);
+  }
+}
+
+.xs {
+  font-size: var(--font-size-xs);
+}
+
+.sm {
+  font-size: var(--font-size-sm);
+}
+
+.md {
+  font-size: var(--font-size-md);
+}
+
+.lg {
+  font-size: var(--font-size-lg);
+}
+
+.xl {
+  font-size: var(--font-size-xl);
+}
+
+.xl2 {
+  font-size: var(--font-size-2xl);
+  line-height: var(--line-height-tight);
+}
+
+.xl3 {
+  font-size: var(--font-size-3xl);
+  line-height: var(--line-height-tight);
+}
+
+.xl4 {
+  font-size: var(--font-size-4xl);
+  line-height: var(--line-height-tight);
+}
+
+.inheritSize {
+  font-size: inherit;
+  line-height: inherit;
+}
+
+.primary {
+  color: var(--text-color-primary);
+}
+
+.secondary {
+  color: var(--text-color-secondary);
+}
+
+.tertiary {
+  color: var(--text-color-tertiary);
+}
+
+.inverted {
+  color: var(--text-color-inverted);
+}
+
+.link {
+  color: var(--text-color-link);
+}
+
+.positive {
+  color: var(--text-color-positive);
+}
+
+.negative {
+  color: var(--text-color-negative);
+}
+
+.warning {
+  color: var(--text-color-warning);
+}
+
+.info {
+  color: var(--text-color-info);
+}
+
+.accent {
+  color: var(--text-color-accent);
+}
+
+.inherit {
+  color: inherit;
+}
+
+.regular {
+  font-weight: var(--font-weight-regular);
+}
+
+.medium {
+  font-weight: var(--font-weight-medium);
+}
+
+.semibold {
+  font-weight: var(--font-weight-semibold);
+}
+
+.bold {
+  font-weight: var(--font-weight-bold);
+}
+
+.nowrap {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.clamp {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: var(--lines);
+}
+
+.tooltip {
+  position: fixed;
+  top: var(--tooltip-top, 0);
+  left: var(--tooltip-left, 0);
+  z-index: var(--z-tooltip);
+  box-sizing: border-box;
+  max-width: var(--size-toast-width);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-normal);
+  overflow-wrap: anywhere;
+  white-space: pre-line;
+  color: var(--text-color-inverted);
+  background: var(--color-bg-inverted);
+  box-shadow: var(--shadow-md);
+
+  @media (forced-colors: active) {
+    border: var(--border-width) solid canvastext;
+  }
+}

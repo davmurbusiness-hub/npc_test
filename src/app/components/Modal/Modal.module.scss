@@ -1,0 +1,206 @@
+@use 'breakpoints';
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-modal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-4);
+  overflow: hidden;
+  background: var(--color-overlay);
+  animation: fade-in var(--duration-normal) var(--easing);
+
+  @include breakpoints.mobile {
+    padding: var(--space-2);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 100%;
+  min-height: 0;
+  max-height: 100%;
+  background: var(--color-bg-surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  animation: pop-in var(--duration-normal) var(--easing);
+
+  @include breakpoints.forced-colors-boundary;
+
+  &:focus {
+    outline: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+.sm {
+  max-width: var(--size-modal-sm);
+}
+
+.md {
+  max-width: var(--size-modal-md);
+}
+
+.lg {
+  max-width: var(--size-modal-lg);
+}
+
+.xl {
+  max-width: var(--size-modal-xl);
+}
+
+.header {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-6);
+  overflow: hidden;
+  border-bottom: var(--border-width) solid var(--color-border);
+  scrollbar-gutter: stable;
+
+  > button {
+    flex-shrink: 0;
+  }
+
+  @include breakpoints.mobile {
+    padding: var(--space-4);
+  }
+}
+
+.title {
+  flex: 1;
+  min-width: 0;
+}
+
+.body {
+  flex: 1;
+  min-height: 0;
+  padding: var(--space-6);
+  overflow-y: auto;
+  scrollbar-gutter: stable;
+
+  @include breakpoints.mobile {
+    padding: var(--space-4);
+  }
+}
+
+.footer {
+  flex-shrink: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-6);
+  overflow: hidden;
+  border-top: var(--border-width) solid var(--color-border);
+  scrollbar-gutter: stable;
+
+  @include breakpoints.mobile {
+    padding: var(--space-4);
+  }
+}
+
+.closing {
+  pointer-events: none;
+  animation: fade-out var(--duration-normal) var(--easing) forwards;
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+.closing .card {
+  animation: pop-out var(--duration-normal) var(--easing) forwards;
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+.top {
+  align-items: flex-start;
+  padding-block-start: calc(var(--control-height-lg) + var(--space-4));
+}
+
+.top .card {
+  animation: drop-in var(--duration-normal) var(--easing);
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+.closing.top .card {
+  animation: drop-out var(--duration-normal) var(--easing) forwards;
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-out {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes pop-in {
+  from {
+    opacity: 0;
+    transform: translateY(var(--space-4));
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pop-out {
+  to {
+    opacity: 0;
+    transform: translateY(var(--space-4));
+  }
+}
+
+@keyframes drop-in {
+  from {
+    opacity: 0;
+    transform: translateY(calc(-1 * var(--space-4)));
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes drop-out {
+  to {
+    opacity: 0;
+    transform: translateY(calc(-1 * var(--space-4)));
+  }
+}

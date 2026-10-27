@@ -1,0 +1,40 @@
+@use 'breakpoints';
+
+.root {
+  display: inline-flex;
+  align-items: center;
+  max-width: 100%;
+  padding: var(--space-0-5) var(--space-2);
+  overflow-wrap: anywhere;
+  border-radius: var(--radius-xs);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-tight);
+
+  @include breakpoints.forced-colors-boundary;
+}
+
+.neutral {
+  background-color: var(--color-bg-muted);
+  color: var(--color-text-secondary);
+}
+
+.info {
+  background-color: var(--color-info-bg);
+  color: var(--text-color-info);
+}
+
+.positive {
+  background-color: var(--color-positive-bg);
+  color: var(--text-color-positive);
+}
+
+.warning {
+  background-color: var(--color-warning-bg);
+  color: var(--text-color-warning);
+}
+
+.negative {
+  background-color: var(--color-negative-bg);
+  color: var(--text-color-negative);
+}

@@ -1,0 +1,36 @@
+.root {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-2);
+  min-width: 0;
+  padding-inline-start: var(--space-3);
+  border-inline-start: var(--border-width-accent) solid;
+}
+
+.fact {
+  border-inline-start-color: var(--color-origin-fact);
+}
+
+.bankView {
+  border-inline-start-color: var(--color-origin-bank-bg);
+}
+
+.aiConclusion {
+  border-inline-start-color: var(--color-origin-ai);
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.sources {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-3);
+  margin: 0;
+  padding: 0;
+  font-size: var(--font-size-sm);
+  list-style: none;
+}
