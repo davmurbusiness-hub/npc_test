@@ -1,0 +1,110 @@
+@use 'breakpoints';
+
+.root {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.list {
+  display: grid;
+  gap: var(--space-1);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: minmax(8ch, 11rem) minmax(0, 1fr) 17ch;
+  gap: var(--space-3);
+  align-items: center;
+  min-height: var(--size-target-min);
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-sm);
+  color: inherit;
+  font-size: var(--font-size-sm);
+  text-decoration: none;
+
+  @include breakpoints.mobile {
+    grid-template-columns: minmax(0, 1fr) 17ch;
+
+    .track {
+      grid-column: 1 / -1;
+      grid-row: 2;
+    }
+  }
+}
+
+.link {
+  @include breakpoints.hover {
+    &:hover {
+      background: var(--color-bg-hover);
+    }
+  }
+
+  &:focus-visible {
+    outline: var(--focus-ring-width) solid var(--color-focus-ring);
+    outline-offset: var(--focus-ring-offset);
+  }
+}
+
+.label {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.selected .label {
+  font-weight: var(--font-weight-semibold);
+}
+
+.track {
+  position: relative;
+  height: var(--space-4);
+}
+
+.bar {
+  position: absolute;
+  inset-block: var(--space-0-5);
+  inset-inline-start: 0;
+  width: var(--bar-share);
+  background: var(--chart-bar);
+  border-radius: 0 var(--radius-xs) var(--radius-xs) 0;
+
+  @media (forced-colors: active) {
+    background: canvastext;
+  }
+}
+
+.muted {
+  background: var(--chart-ordinal-3);
+}
+
+.marker {
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: var(--marker-share);
+  width: var(--size-chart-stroke);
+  background: var(--color-text-secondary);
+}
+
+.value {
+  color: var(--color-text-secondary);
+  font-variant-numeric: tabular-nums;
+  text-align: end;
+  white-space: nowrap;
+}
+
+.markerLegend {
+  display: flex;
+  gap: var(--space-2);
+  align-items: center;
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-xs);
+}
+
+.markerKey {
+  width: var(--size-chart-stroke);
+  height: var(--space-3);
+  background: var(--color-text-secondary);
+}

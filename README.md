@@ -1,75 +1,41 @@
-# React + TypeScript + Vite
+# ППК РЭО — Обращения граждан
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Веб-приложение для ведения реестра обращений граждан. Оно состоит из трёх экранов: дашборд, реестр и карточка гражданина.
 
-Currently, two official plugins are available:
+На **дашборде** (`/`) собрана сводка: KPI, очередь действий, возраст задолженности, топ должников, разбивка по районам и каналам связи, льготы и динамика сборов. На экране **реестра** (`/registry`) есть таблица граждан с поиском, фильтрами, сортировкой и быстрым предпросмотром. **Карточка гражданина** (`/registry/:id`) разбита на разделы: личные данные, контакты, адреса, документы, семья, занятость, образование, льготы, представители, договоры и вложения. При сохранении карточка проходит валидацию: поля проверяются по отдельности и между собой, а также сверяются с исходными данными. Дубликаты ищутся по СНИЛС, и пользователь видит предупреждение. Если закрыть страницу с несохранёнными правками, сработает защита от потери данных.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Стек
 
-## React Compiler
+- React 19, TypeScript, Vite
+- Zustand для состояния, TanStack Query (core) для кеша запросов
+- TanStack Table и TanStack Virtual для виртуализированной таблицы реестра
+- Recharts для графиков
+- SCSS-модули,  светлая и тёмная темы
+- ESLint  Stylelint, Prettier
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Структура
 
 ```
+src/
+├── config/          маршруты (paths.ts)
+└── app/
+    ├── api/         имитация серверного API: реестр, листинг, дашборд, localStorage-наложение
+    ├── data/        генерация демо-данных и справочников
+    ├── pages/       Dashboard, Registry, Citizen и их локальные компоненты
+    ├── components/  общие UI-компоненты (Button, Select, DataTable, Tabs и т.д.)
+    ├── layouts/     каркас приложения
+    ├── stores/      RootStore (тема, query-параметры) и локальные сторы страниц
+    ├── hooks/       общие хуки
+    ├── utils/       бизнес-правила, форматирование, маски, нормализация, validation/
+    ├── types/       типы сущностей, справочников, форм и API
+    └── styles/      глобальные стили и токены
+```
 
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
+## Запуск
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+```bash
+yarn install
+yarn dev          # режим разработки
+yarn build        # проверка типов и сборка
+yarn verify       # typecheck + eslint + stylelint + prettier
 ```

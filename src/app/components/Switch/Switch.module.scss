@@ -1,0 +1,116 @@
+@use 'breakpoints';
+
+.root {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  min-width: 0;
+}
+
+.control {
+  position: relative;
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+}
+
+.input {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: var(--size-switch-width);
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+
+  &:disabled {
+    cursor: default;
+  }
+}
+
+.track {
+  position: relative;
+  display: inline-block;
+  width: var(--size-switch-width);
+  height: var(--size-switch-height);
+  border-radius: var(--radius-full);
+  background-color: var(--color-border-input);
+  transition: background-color var(--duration-fast) var(--easing);
+
+  @include breakpoints.forced-colors-boundary;
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
+.thumb {
+  position: absolute;
+  top: var(--space-0-5);
+  left: var(--space-0-5);
+  width: calc(var(--size-switch-height) - 2 * var(--space-0-5));
+  height: calc(var(--size-switch-height) - 2 * var(--space-0-5));
+  border-radius: var(--radius-full);
+  background-color: var(--color-control-mark);
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--duration-fast) var(--easing);
+
+  @media (forced-colors: active) {
+    background-color: buttontext;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
+@include breakpoints.hover {
+  .input:hover:not(:disabled, :checked) + .track {
+    background-color: var(--color-border-input-hover);
+  }
+}
+
+.input:checked + .track {
+  background-color: var(--color-control-checked);
+
+  @include breakpoints.forced-colors-selected;
+
+  .thumb {
+    transform: translateX(calc(var(--size-switch-width) - var(--size-switch-height)));
+  }
+}
+
+.input:focus-visible + .track {
+  outline: var(--focus-ring-width) solid var(--color-focus-ring);
+  outline-offset: var(--focus-ring-offset);
+}
+
+.input:disabled + .track {
+  background-color: var(--color-bg-disabled);
+}
+
+.input:disabled:checked + .track {
+  background-color: var(--color-control-checked-disabled);
+}
+
+.text {
+  display: grid;
+  gap: var(--space-0-5);
+  min-width: 0;
+  padding-top: calc(
+    (var(--size-switch-height) - var(--font-size-sm) * var(--line-height-normal)) / 2
+  );
+}
+
+.label {
+  cursor: pointer;
+}
+
+.disabled .text {
+  opacity: 0.5;
+}
+
+.disabled .label {
+  cursor: default;
+}

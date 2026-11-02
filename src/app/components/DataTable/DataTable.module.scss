@@ -4,6 +4,7 @@
   position: relative;
   max-width: 100%;
   overflow-x: auto;
+  container-type: inline-size;
 
   &:focus-visible {
     outline: var(--focus-ring-width) solid var(--color-focus-ring);
@@ -51,11 +52,6 @@
   white-space: nowrap;
 }
 
-.empty {
-  color: var(--color-text-tertiary);
-  text-align: center;
-}
-
 @include breakpoints.mobile {
   .th,
   .td {
@@ -63,29 +59,25 @@
   }
 }
 
-.stack {
-  container-type: inline-size;
-}
-
 @include breakpoints.narrow-container {
-  .stack thead {
+  .root thead {
     @include breakpoints.visually-hidden;
   }
 
-  .stack .table,
-  .stack tbody {
+  .root .table,
+  .root tbody {
     display: block;
   }
 
-  .stack .caption {
+  .root .caption {
     display: block;
   }
 
-  .stack .td:empty {
+  .root .td:empty {
     display: none;
   }
 
-  .stack tr {
+  .root tr {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(16ch, 1fr));
     gap: var(--space-3);
@@ -93,13 +85,13 @@
     border-bottom: var(--border-width) solid var(--color-border);
   }
 
-  .stack .td {
+  .root .td {
     padding: 0;
     border-bottom: 0;
     text-align: start;
   }
 
-  .stack .td[data-label]::before {
+  .root .td[data-label]::before {
     content: attr(data-label) / '';
     display: block;
     margin-bottom: var(--space-0-5);
@@ -108,15 +100,11 @@
     white-space: nowrap;
   }
 
-  .stack .td[data-label]:has(> :is(a, button):only-child)::before {
+  .root .td[data-label]:has(> :is(a, button):only-child)::before {
     content: none;
   }
 
-  .stack .td:first-child {
+  .root .td:first-child {
     grid-column: 1 / -1;
-  }
-
-  .stack .empty {
-    text-align: center;
   }
 }

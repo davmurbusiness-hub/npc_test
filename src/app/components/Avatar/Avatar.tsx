@@ -1,8 +1,6 @@
 import cn from 'classnames';
 import { useState } from 'react';
 
-import { initialOf } from 'utils/initialOf';
-
 import styles from './Avatar.module.scss';
 
 export type AvatarSize = 'sm' | 'lg';
@@ -21,8 +19,8 @@ export function Avatar({ name, src, size = 'sm', className }: AvatarProps) {
 
   return (
     <span aria-hidden="true" className={cn(styles.root, styles[size], className)}>
-      {initialOf(name)}
-      {showImage ? (
+      {/[\p{L}\p{N}]/u.exec(name)?.[0]?.toUpperCase() ?? ''}
+      {showImage && (
         <img
           className={styles.image}
           src={src}
@@ -32,7 +30,7 @@ export function Avatar({ name, src, size = 'sm', className }: AvatarProps) {
             setFailedSrc(src);
           }}
         />
-      ) : null}
+      )}
     </span>
   );
 }

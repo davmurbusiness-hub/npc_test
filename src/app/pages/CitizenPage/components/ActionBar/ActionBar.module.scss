@@ -1,0 +1,29 @@
+@use 'breakpoints';
+
+.root {
+  position: sticky;
+  inset-block-start: 0;
+  z-index: var(--z-sticky);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  align-items: center;
+  justify-content: space-between;
+  padding-block: var(--space-2);
+  background: var(--color-bg-page);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.status {
+  @include breakpoints.mobile {
+    flex-basis: 100%;
+    text-align: end;
+  }
+}

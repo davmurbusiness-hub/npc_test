@@ -6,44 +6,15 @@ import { useFieldDescription } from 'hooks/ui';
 
 import styles from './Input.module.scss';
 
-import type { ChangeEvent, HTMLInputTypeAttribute, InputHTMLAttributes, Ref } from 'react';
+import type { ChangeEvent, InputHTMLAttributes, Ref } from 'react';
 
 export interface InputProps extends Omit<
   InputHTMLAttributes<HTMLInputElement>,
   'size' | 'children'
 > {
   label: string;
-
   hint?: string;
-
-  numeric?: boolean;
-
   error?: string;
-
-  className?: string;
-
-  id?: string;
-
-  type?: HTMLInputTypeAttribute;
-
-  disabled?: boolean;
-
-  value?: InputHTMLAttributes<HTMLInputElement>['value'];
-
-  defaultValue?: InputHTMLAttributes<HTMLInputElement>['defaultValue'];
-
-  onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
-
-  placeholder?: string;
-
-  inputMode?: InputHTMLAttributes<HTMLInputElement>['inputMode'];
-
-  pattern?: string;
-
-  'aria-invalid'?: InputHTMLAttributes<HTMLInputElement>['aria-invalid'];
-
-  'aria-describedby'?: string;
-
   ref?: Ref<HTMLInputElement>;
 }
 
@@ -51,14 +22,13 @@ export function Input({
   label,
   hint,
   error,
-  numeric,
   className,
   id: idProp,
-  type = 'text',
   disabled,
   value,
   defaultValue,
   onChange,
+  placeholder,
   'aria-invalid': ariaInvalid,
   'aria-describedby': foreignDescribedBy,
   ref,
@@ -80,7 +50,6 @@ export function Input({
   } = useFieldDescription({ hint, error, describedBy: foreignDescribedBy, hintShown: !isEmpty });
 
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
-    if (numeric) event.target.value = event.target.value.replace(/\D/g, '');
     setTypedLength(event.target.value.length);
     onChange?.(event);
   }
@@ -92,7 +61,6 @@ export function Input({
         htmlFor={id}
         size="sm"
         color="secondary"
-        wrap="normal"
         className={cn(disabled && styles.labelDisabled)}
       >
         {label}
@@ -101,13 +69,10 @@ export function Input({
         {...rest}
         ref={ref}
         id={id}
-        type={type}
         value={value}
         defaultValue={defaultValue}
         onChange={handleChange}
-        placeholder={hasHint && isEmpty ? hint : rest.placeholder}
-        inputMode={numeric ? 'numeric' : rest.inputMode}
-        pattern={numeric ? '[0-9]*' : rest.pattern}
+        placeholder={hasHint && isEmpty ? hint : placeholder}
         disabled={disabled}
         className={styles.input}
         aria-invalid={hasError ? true : ariaInvalid}
@@ -115,12 +80,12 @@ export function Input({
       />
       <div className={styles.footer}>
         {showHintBelow && (
-          <Text as="p" id={hintId} size="sm" color="tertiary" wrap="normal">
+          <Text as="p" id={hintId} size="sm" color="tertiary">
             {hint}
           </Text>
         )}
         {hasError && (
-          <Text as="p" id={errorId} size="sm" color="negative" wrap="normal">
+          <Text as="p" id={errorId} size="sm" color="negative">
             {error}
           </Text>
         )}

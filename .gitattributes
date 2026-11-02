@@ -1,0 +1,10 @@
+# В репозитории и в рабочей копии только LF, как требует Prettier (`endOfLine: 'lf'`).
+# Перебивает `core.autocrlf=true` из установщика Git для Windows, который при checkout
+# превращал LF в CRLF, и `yarn lint` падал на каждой строке.
+* text=auto eol=lf
+
+*.png binary
+*.jpg binary
+*.ico binary
+*.woff binary
+*.woff2 binary

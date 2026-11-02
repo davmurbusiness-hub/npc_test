@@ -1,21 +1,15 @@
 import cn from 'classnames';
 
+import type { BadgeTone } from 'types/ui';
+
 import styles from './Badge.module.scss';
 
-import type { HTMLAttributes, ReactNode } from 'react';
+import type { ComponentProps } from 'react';
 
-export type BadgeTone = 'neutral' | 'info' | 'positive' | 'warning' | 'negative';
-
-export interface BadgeProps extends Omit<HTMLAttributes<HTMLSpanElement>, 'children'> {
+export interface BadgeProps extends ComponentProps<'span'> {
   tone?: BadgeTone;
-  className?: string;
-  children: ReactNode;
 }
 
-export function Badge({ tone = 'neutral', className, children, ...rest }: BadgeProps) {
-  return (
-    <span {...rest} className={cn(styles.root, styles[tone], className)}>
-      {children}
-    </span>
-  );
+export function Badge({ tone = 'neutral', className, ...rest }: BadgeProps) {
+  return <span {...rest} className={cn(styles.root, styles[tone], className)} />;
 }

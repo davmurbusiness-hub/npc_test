@@ -5,8 +5,6 @@ import styles from './PageLoader.module.scss';
 
 export interface PageLoaderProps {
   label?: string;
-
-  fullscreen?: boolean;
   className?: string;
 }
 
@@ -36,7 +34,7 @@ function MarkParts({ active }: { active: boolean }) {
   );
 }
 
-export function PageLoader({ label = 'Загрузка', fullscreen = true, className }: PageLoaderProps) {
+export function PageLoader({ label = 'Загрузка', className }: PageLoaderProps) {
   const [second, setSecond] = useState(false);
 
   useEffect(() => {
@@ -46,11 +44,7 @@ export function PageLoader({ label = 'Загрузка', fullscreen = true, clas
   }, []);
 
   return (
-    <div
-      role="status"
-      aria-label={label}
-      className={cn(styles.root, fullscreen && styles.fullscreen, className)}
-    >
+    <div role="status" aria-label={label} className={cn(styles.root, className)}>
       <svg className={styles.icon} viewBox="-36 0 180 180" fill="none" aria-hidden="true">
         <MarkParts active={!second} />
         <MarkParts active={second} />

@@ -1,0 +1,46 @@
+@use 'breakpoints';
+
+.root {
+  position: relative;
+  min-width: 0;
+}
+
+.field {
+  gap: 0;
+
+  > label {
+    @include breakpoints.visually-hidden;
+  }
+
+  > :last-child {
+    display: none;
+  }
+
+  input {
+    height: var(--control-height-md);
+    padding-inline: calc(var(--space-3) + var(--size-icon-md) + var(--space-2)) var(--space-4);
+  }
+}
+
+.hasValue input {
+  padding-inline-end: calc(var(--control-height-sm) + var(--space-2));
+
+  @include breakpoints.touch {
+    padding-inline-end: calc(var(--size-target-touch) + var(--space-1));
+  }
+}
+
+.searchIcon {
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline-start: var(--space-3);
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.clear {
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline-end: var(--space-1);
+  transform: translateY(-50%);
+}

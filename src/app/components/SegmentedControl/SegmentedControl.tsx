@@ -15,7 +15,6 @@ export interface SegmentedControlProps<T extends string = string> {
   onChange: (value: T) => void;
 
   label: string;
-  disabled?: boolean;
   className?: string;
 }
 
@@ -24,11 +23,8 @@ export function SegmentedControl<T extends string>({
   value,
   onChange,
   label,
-  disabled = false,
   className,
 }: SegmentedControlProps<T>) {
-  if (options.length === 0) return null;
-
   return (
     <div role="group" aria-label={label} className={cn(styles.root, className)}>
       {options.map((option) => {
@@ -39,10 +35,9 @@ export function SegmentedControl<T extends string>({
             key={option.value}
             type="button"
             aria-pressed={active}
-            disabled={disabled}
             className={cn(styles.option, active && styles.active)}
             onClick={() => {
-              if (!active) onChange(option.value);
+              onChange(option.value);
             }}
           >
             {option.label}

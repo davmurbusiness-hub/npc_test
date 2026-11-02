@@ -21,21 +21,10 @@
 }
 
 .text {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: var(--space-2);
-}
-
-.line {
   @include shimmer;
 
-  display: block;
   height: var(--font-size-md);
   border-radius: var(--radius-xs);
-}
-
-.line:last-child:not(:first-child) {
-  width: 60%;
 }
 
 .block {

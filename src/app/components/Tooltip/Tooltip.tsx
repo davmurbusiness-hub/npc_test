@@ -10,7 +10,7 @@ import {
 } from 'react';
 import { createPortal } from 'react-dom';
 
-import { isEmptyNode } from 'utils/isEmptyNode';
+import { isEmptyNode } from 'utils/dom';
 
 import { placeTooltip } from './placeTooltip';
 import styles from './Tooltip.module.scss';

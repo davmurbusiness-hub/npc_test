@@ -8,43 +8,29 @@ import { Text } from 'components/Text';
 import styles from './Button.module.scss';
 
 import type { ButtonSize, ButtonVariant } from './Button';
-import type { MouseEvent, ReactNode } from 'react';
+import type { LinkProps } from 'react-router';
 
-export interface ButtonLinkProps {
-  to: string;
+export interface ButtonLinkProps extends LinkProps {
   variant?: ButtonVariant;
   size?: ButtonSize;
   icon?: IconName;
-
-  onClick?: (event: MouseEvent<HTMLAnchorElement>) => void;
-  className?: string;
-  children: ReactNode;
 }
 
 export function ButtonLink({
-  to,
   variant = 'secondary',
   size = 'md',
   icon,
-  onClick,
   className,
   children,
+  ...rest
 }: ButtonLinkProps) {
   return (
     <Link
-      to={to}
-      onClick={onClick}
+      {...rest}
       className={cn(styles.root, styles.link, styles[variant], styles[size], className)}
     >
       {icon && <Icon name={icon} size={size} />}
-      <Text
-        as="span"
-        size={size}
-        weight="medium"
-        color="inherit"
-        wrap="normal"
-        className={styles.label}
-      >
+      <Text as="span" size={size} weight="medium" color="inherit" className={styles.label}>
         {children}
       </Text>
     </Link>

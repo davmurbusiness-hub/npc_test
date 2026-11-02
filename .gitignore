@@ -22,3 +22,18 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Проект живёт на yarn — npm-лок не коммитим и не даём ему появиться
+package-lock.json
+
+coverage
+*.tsbuildinfo
+.eslintcache
+.stylelintcache
+
+.env
+.env.*
+!.env.example
+
+Thumbs.db
+Desktop.ini

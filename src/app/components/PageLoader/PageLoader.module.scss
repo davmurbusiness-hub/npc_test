@@ -5,12 +5,8 @@
   display: grid;
   place-items: center;
   width: 100%;
-  min-height: 100%;
-  background: var(--color-bg-page);
-}
-
-.fullscreen {
   min-height: 100dvh;
+  background: var(--color-bg-page);
 }
 
 .icon {

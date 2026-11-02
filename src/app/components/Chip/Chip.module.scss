@@ -1,0 +1,75 @@
+@use 'breakpoints';
+
+.root {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  max-width: 100%;
+  min-height: var(--control-height-sm);
+  padding: 0 var(--space-3);
+  border-radius: var(--radius-full);
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-tight);
+  color: var(--color-text-primary);
+  background-color: var(--color-bg-muted);
+
+  @include breakpoints.forced-colors-boundary;
+}
+
+.removable {
+  padding-right: var(--space-1);
+}
+
+.label {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.remove {
+  position: relative;
+  display: inline-grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: var(--size-target-min);
+  height: var(--size-target-min);
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-full);
+  color: var(--color-text-secondary);
+  background: transparent;
+  cursor: pointer;
+  transition:
+    background-color var(--duration-fast) var(--easing),
+    color var(--duration-fast) var(--easing);
+
+  @include breakpoints.touch {
+    &::after {
+      position: absolute;
+      inset: calc((var(--size-target-min) - var(--size-target-touch)) / 2);
+      content: '';
+    }
+  }
+
+  @include breakpoints.hover {
+    &:hover {
+      color: var(--color-text-primary);
+      background-color: var(--color-bg-hover);
+    }
+  }
+
+  &:active {
+    background-color: var(--color-bg-pressed);
+  }
+
+  &:focus-visible {
+    outline: var(--focus-ring-width) solid var(--color-focus-ring);
+    outline-offset: 0;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}

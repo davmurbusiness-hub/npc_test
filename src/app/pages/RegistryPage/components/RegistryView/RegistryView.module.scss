@@ -1,0 +1,111 @@
+@use 'breakpoints';
+
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.header {
+  flex: none;
+}
+
+.search {
+  flex: none;
+}
+
+.inlineError {
+  display: flex;
+  gap: var(--space-3);
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-2) var(--space-4);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-bg-surface);
+}
+
+.workspace {
+  --registry-chrome: calc(
+    var(--control-height-md) + 2 * var(--space-3) + var(--space-2) + var(--space-8)
+  );
+
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-4);
+
+  @include breakpoints.desktop {
+    height: calc(100dvh - var(--registry-chrome));
+  }
+
+  @include breakpoints.spacious {
+    grid-template-columns: minmax(0, 1fr) var(--size-form-width);
+  }
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-bg-surface);
+}
+
+.listBody {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-height: 0;
+
+  @include breakpoints.mobile {
+    height: 70dvh;
+  }
+}
+
+.table {
+  flex: 1;
+}
+
+.pagination {
+  flex: none;
+  padding: var(--space-3) var(--space-4);
+  border-block-start: var(--border-width) solid var(--color-border);
+}
+
+.preview {
+  min-height: 0;
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius-lg);
+
+  @include breakpoints.compact {
+    position: fixed;
+    inset-block: var(--space-4);
+    inset-inline-end: var(--space-4);
+    z-index: var(--z-overlay);
+    display: none;
+    width: min(var(--size-drawer-width), calc(100vw - 2 * var(--space-4)));
+    box-shadow: var(--shadow-lg);
+  }
+
+  @include breakpoints.mobile {
+    position: fixed;
+    inset: 0;
+    z-index: var(--z-overlay);
+    display: none;
+    border: none;
+    border-radius: 0;
+  }
+}
+
+.hasSelection .preview {
+  @include breakpoints.compact {
+    display: block;
+  }
+
+  @include breakpoints.mobile {
+    display: block;
+  }
+}

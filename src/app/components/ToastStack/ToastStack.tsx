@@ -5,11 +5,9 @@ import type { ToastTone } from 'components/Toast';
 
 import styles from './ToastStack.module.scss';
 
-export type ToastStackTone = ToastTone;
-
 export interface ToastStackItem {
   id: string;
-  tone: ToastStackTone;
+  tone: ToastTone;
   text: string;
 }
 
@@ -17,6 +15,7 @@ export interface ToastStackProps {
   toasts: readonly ToastStackItem[];
 
   onDismiss: (id: string) => void;
+
   className?: string;
 }
 

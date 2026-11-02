@@ -1,0 +1,180 @@
+@use 'breakpoints';
+
+.root {
+  display: grid;
+  grid-template-columns: var(--size-sidebar-width) minmax(0, 1fr);
+  min-height: 100dvh;
+
+  @include breakpoints.mobile {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.skipLink {
+  @include breakpoints.visually-hidden;
+
+  &:focus-visible {
+    position: fixed;
+    inset-block-start: var(--space-2);
+    inset-inline-start: var(--space-2);
+    z-index: var(--z-tooltip);
+    width: auto;
+    height: auto;
+    padding: var(--space-2) var(--space-4);
+    clip-path: none;
+    border-radius: var(--radius-sm);
+    background: var(--color-bg-surface);
+    box-shadow: var(--shadow-md);
+  }
+}
+
+.sidebar {
+  position: sticky;
+  inset-block-start: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  height: 100dvh;
+  padding: var(--space-5) var(--space-4);
+  border-inline-end: var(--border-width) solid var(--color-border);
+  background: var(--color-bg-surface);
+
+  @include breakpoints.mobile {
+    display: none;
+  }
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding-inline: var(--space-2);
+}
+
+.brandMark {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: var(--control-height-sm);
+  height: var(--control-height-sm);
+  border-radius: var(--radius-md);
+  background: var(--color-accent);
+  color: var(--color-on-accent);
+  font-weight: var(--font-weight-bold);
+}
+
+.brandText {
+  display: grid;
+  min-width: 0;
+}
+
+.nav {
+  display: grid;
+  gap: var(--space-1);
+}
+
+.link {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: var(--control-height-md);
+  padding-inline: var(--space-3);
+  border-radius: var(--radius-md);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  text-decoration: none;
+  transition:
+    background-color var(--duration-fast) var(--easing),
+    color var(--duration-fast) var(--easing);
+
+  @include breakpoints.hover {
+    &:hover {
+      background: var(--color-bg-hover);
+      color: var(--color-text-primary);
+    }
+  }
+
+  &:focus-visible {
+    outline: var(--focus-ring-width) solid var(--color-focus-ring);
+    outline-offset: var(--focus-ring-offset);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
+.active {
+  background: var(--color-accent-bg);
+  color: var(--text-color-accent);
+
+  @include breakpoints.hover {
+    &:hover {
+      background: var(--color-accent-bg);
+      color: var(--text-color-accent);
+    }
+  }
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.topbar {
+  position: sticky;
+  inset-block-start: 0;
+  z-index: var(--z-sticky);
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-6);
+  background: var(--color-bg-topbar);
+  backdrop-filter: blur(var(--blur-glass));
+
+  @include breakpoints.mobile {
+    padding-inline: var(--space-4);
+  }
+}
+
+.menuButton {
+  @include breakpoints.desktop {
+    display: none;
+  }
+}
+
+.spacer {
+  flex: 1;
+}
+
+.user {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.userText {
+  display: grid;
+
+  @include breakpoints.mobile {
+    display: none;
+  }
+}
+
+.content {
+  flex: 1;
+  width: 100%;
+  max-width: 1440px;
+  margin-inline: auto;
+  padding: var(--space-2) var(--space-6) var(--space-8);
+
+  &:focus {
+    outline: none;
+  }
+
+  @include breakpoints.mobile {
+    padding-inline: var(--space-4);
+  }
+}

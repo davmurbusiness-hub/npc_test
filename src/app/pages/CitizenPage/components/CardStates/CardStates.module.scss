@@ -1,0 +1,32 @@
+@use 'breakpoints';
+
+.skeleton {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.header {
+  display: flex;
+  gap: var(--space-4);
+  align-items: center;
+  padding: var(--space-5);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-bg-surface);
+}
+
+.lines {
+  display: grid;
+  flex: 1;
+  gap: var(--space-2);
+}
+
+.body {
+  display: grid;
+  grid-template-columns: minmax(180px, 220px) minmax(0, 1fr);
+  gap: var(--space-4);
+
+  @include breakpoints.mobile {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

@@ -3,7 +3,6 @@ import { useId, useLayoutEffect, useRef, useState } from 'react';
 
 import { Icon } from 'components/Icon';
 import { Text } from 'components/Text';
-import { isEmptyNode } from 'utils/isEmptyNode';
 
 import styles from './Accordion.module.scss';
 
@@ -17,21 +16,9 @@ export interface AccordionProps {
 
   children?: ReactNode;
 
-  icon?: ReactNode;
-
-  count?: ReactNode;
-
-  actions?: ReactNode;
-
-  disabled?: boolean;
-
-  open?: boolean;
+  count?: number;
 
   defaultOpen?: boolean;
-
-  onOpenChange?: (open: boolean) => void;
-
-  keepMounted?: boolean;
 
   headingLevel?: AccordionHeadingLevel;
 
@@ -43,21 +30,14 @@ export interface AccordionProps {
 export function Accordion({
   title,
   children,
-  icon,
   count,
-  actions,
-  disabled,
-  open,
   defaultOpen = false,
-  onOpenChange,
-  keepMounted = false,
   headingLevel = 3,
   size = 'md',
   className,
 }: AccordionProps) {
   const baseId = useId();
-  const [inner, setInner] = useState(defaultOpen);
-  const isOpen = open ?? inner;
+  const [isOpen, setIsOpen] = useState(defaultOpen);
   const [mounted, setMounted] = useState(isOpen);
   const panelRef = useRef<HTMLDivElement>(null);
   const Heading = `h${headingLevel}` as const;
@@ -68,7 +48,7 @@ export function Accordion({
 
   useLayoutEffect(() => {
     const panel = panelRef.current;
-    if (isOpen || !mounted || keepMounted || panel === null) return undefined;
+    if (isOpen || !mounted || panel === null) return undefined;
 
     const running = typeof panel.getAnimations === 'function' ? panel.getAnimations() : [];
     if (running.length === 0) {
@@ -83,47 +63,31 @@ export function Accordion({
     return () => {
       stale = true;
     };
-  }, [isOpen, mounted, keepMounted]);
-
-  const toggle = () => {
-    const next = !isOpen;
-    if (open === undefined) setInner(next);
-    onOpenChange?.(next);
-  };
-
-  const hasIcon = !isEmptyNode(icon);
-  const hasCount = !isEmptyNode(count);
-  const hasActions = !isEmptyNode(actions);
-  const isPlainCount = typeof count === 'string' || typeof count === 'number';
+  }, [isOpen, mounted]);
 
   return (
     <div
       className={cn(styles.item, styles[size], className)}
       data-state={isOpen ? 'open' : 'closed'}
     >
-      <div className={styles.row}>
-        <Heading className={styles.heading}>
-          <button
-            type="button"
-            id={headerId}
-            className={styles.trigger}
-            disabled={disabled}
-            aria-expanded={isOpen}
-            aria-controls={panelId}
-            onClick={toggle}
-          >
-            {hasIcon && <span className={styles.icon}>{icon}</span>}
-            <Text as="span" size={size} weight="medium" wrap="normal" className={styles.title}>
-              {title}
-            </Text>
-            {hasCount && (
-              <span className={isPlainCount ? styles.count : styles.countSlot}>{count}</span>
-            )}
-            <Icon name="chevronDown" size={size} className={styles.chevron} />
-          </button>
-        </Heading>
-        {hasActions && <div className={styles.actions}>{actions}</div>}
-      </div>
+      <Heading className={styles.heading}>
+        <button
+          type="button"
+          id={headerId}
+          className={styles.trigger}
+          aria-expanded={isOpen}
+          aria-controls={panelId}
+          onClick={() => {
+            setIsOpen(!isOpen);
+          }}
+        >
+          <Text as="span" size={size} weight="medium" className={styles.title}>
+            {title}
+          </Text>
+          {count !== undefined && <span className={styles.count}>{count}</span>}
+          <Icon name="chevronDown" size={size} className={styles.chevron} />
+        </button>
+      </Heading>
       <div
         ref={panelRef}
         id={panelId}
@@ -133,7 +97,7 @@ export function Accordion({
         inert={!isOpen}
       >
         <div className={styles.panelInner}>
-          {(keepMounted || mounted) && <div className={styles.content}>{children}</div>}
+          {mounted && <div className={styles.content}>{children}</div>}
         </div>
       </div>
     </div>

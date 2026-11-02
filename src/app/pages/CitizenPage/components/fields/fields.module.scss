@@ -1,0 +1,70 @@
+@use 'breakpoints';
+
+.group {
+  display: grid;
+  gap: var(--space-3);
+  min-width: 0;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr));
+  min-width: 0;
+  margin: 0;
+
+  @include breakpoints.mobile {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.viewGrid {
+  gap: var(--space-4) var(--space-6);
+}
+
+.editGrid {
+  gap: var(--space-1) var(--space-4);
+  align-items: start;
+}
+
+.pair {
+  display: grid;
+  gap: var(--space-0-5);
+  min-width: 0;
+
+  dd {
+    margin: 0;
+  }
+}
+
+.readOnly {
+  align-content: start;
+  min-height: var(--control-height-lg);
+  padding-block-end: var(--space-5);
+}
+
+.wide {
+  grid-column: 1 / -1;
+}
+
+.value {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  align-items: center;
+  overflow-wrap: anywhere;
+}
+
+.switchField {
+  display: flex;
+  align-items: center;
+  min-height: var(--control-height-lg);
+  padding-block-start: var(--space-5);
+
+  @include breakpoints.mobile {
+    padding-block-start: 0;
+  }
+}
+
+.warning {
+  color: var(--text-color-warning);
+}

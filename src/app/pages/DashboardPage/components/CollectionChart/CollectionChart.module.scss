@@ -1,0 +1,101 @@
+@use 'breakpoints';
+
+.root {
+  display: grid;
+  gap: var(--space-2);
+  min-width: 0;
+  margin: 0;
+}
+
+.srOnly {
+  @include breakpoints.visually-hidden;
+}
+
+.panelHead {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-4);
+  align-items: center;
+  justify-content: space-between;
+  margin-top: var(--space-2);
+}
+
+.panelTitle {
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-xs);
+}
+
+.ratePlot {
+  height: 9rem;
+  min-width: 0;
+}
+
+.amountPlot {
+  height: 11rem;
+  min-width: 0;
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin: 0;
+  padding: 0;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-xs);
+  list-style: none;
+
+  li {
+    display: inline-flex;
+    gap: var(--space-1);
+    align-items: center;
+  }
+}
+
+.swatch {
+  width: var(--space-2);
+  height: var(--space-2);
+  border-radius: var(--radius-xs);
+}
+
+.charged {
+  background: var(--chart-ordinal-3);
+}
+
+.paid {
+  background: var(--chart-ordinal-1);
+}
+
+.tooltip {
+  display: grid;
+  gap: var(--space-1);
+  padding: var(--space-2) var(--space-3);
+  background: var(--color-bg-surface);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-md);
+  font-size: var(--font-size-xs);
+}
+
+.tooltipTitle {
+  margin: 0;
+  font-weight: var(--font-weight-semibold);
+}
+
+.tooltipList {
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: var(--space-0-5) var(--space-3);
+  margin: 0;
+
+  dt {
+    color: var(--color-text-secondary);
+  }
+
+  dd {
+    margin: 0;
+    font-variant-numeric: tabular-nums;
+    text-align: end;
+  }
+}

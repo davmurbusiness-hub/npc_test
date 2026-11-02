@@ -1,0 +1,209 @@
+@use 'breakpoints';
+
+.root {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+.labelDisabled {
+  opacity: 0.5;
+}
+
+.footer {
+  min-height: calc(var(--font-size-sm) * var(--line-height-normal));
+}
+
+.trigger {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  width: 100%;
+  min-width: 0;
+  height: var(--control-height-lg);
+  padding: 0 var(--space-4);
+  border: var(--border-width) solid var(--color-border-input);
+  border-radius: var(--radius-md);
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-md);
+  text-align: left;
+  color: var(--color-text-primary);
+  background-color: var(--color-bg-surface);
+  cursor: pointer;
+  transition: border-color var(--duration-fast) var(--easing);
+
+  @include breakpoints.hover {
+    &:hover:not(:disabled, [aria-invalid='true']) {
+      border-color: var(--color-border-input-hover);
+    }
+  }
+
+  &:focus-visible {
+    outline: var(--focus-ring-width) solid var(--color-focus-ring);
+    outline-offset: var(--focus-ring-offset);
+  }
+
+  &[aria-expanded='true'] {
+    border-color: var(--color-border-input-hover);
+  }
+
+  &[aria-invalid='true'] {
+    border-color: var(--color-negative);
+  }
+
+  &:disabled {
+    cursor: default;
+    opacity: 0.5;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
+.empty {
+  color: var(--color-text-tertiary);
+}
+
+.value {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.chevron {
+  transition: transform var(--duration-fast) var(--easing);
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
+.chevronOpen {
+  transform: rotate(180deg);
+}
+
+.popup {
+  position: fixed;
+  top: 0;
+  left: var(--popup-left, 0);
+  z-index: calc(var(--z-modal) + 1);
+  display: flex;
+  flex-direction: column;
+  width: max-content;
+  min-width: var(--popup-min-width, 0);
+  max-width: calc(100vw - 2 * var(--space-2));
+  max-height: var(--popup-max-height, var(--size-dropdown-max-height));
+  overflow: hidden;
+  visibility: hidden;
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius-md);
+  background-color: var(--color-bg-surface);
+  box-shadow: var(--shadow-lg);
+
+  @media (forced-colors: active) {
+    border-color: canvastext;
+  }
+
+  &[data-placement='bottom'] {
+    top: var(--popup-top);
+    visibility: visible;
+  }
+
+  &[data-placement='top'] {
+    top: auto;
+    bottom: var(--popup-bottom);
+    visibility: visible;
+  }
+}
+
+.search {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 0 var(--space-3);
+  border-bottom: var(--border-width) solid var(--color-border);
+
+  &:focus-within {
+    outline: var(--focus-ring-width) solid var(--color-focus-ring);
+    outline-offset: calc(-1 * var(--focus-ring-width));
+  }
+}
+
+.searchInput {
+  flex: 1;
+  min-width: 0;
+  height: var(--control-height-md);
+  padding: 0;
+  border: 0;
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-primary);
+  background: transparent;
+
+  &::placeholder {
+    color: var(--color-text-tertiary);
+    opacity: 1;
+  }
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.list {
+  flex: 1 1 auto;
+  min-height: 0;
+  margin: 0;
+  padding: var(--space-1);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  list-style: none;
+
+  &:empty {
+    display: none;
+  }
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: var(--control-height-sm);
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-tight);
+  color: var(--color-text-primary);
+  cursor: pointer;
+
+  @include breakpoints.touch {
+    min-height: var(--size-target-touch);
+  }
+}
+
+.none {
+  color: var(--color-text-tertiary);
+}
+
+.active {
+  background-color: var(--color-bg-hover);
+
+  @media (forced-colors: active) {
+    outline: var(--border-width) solid highlight;
+  }
+}
+
+.optionLabel {
+  flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.nothing {
+  padding: var(--space-3) var(--space-4);
+}

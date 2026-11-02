@@ -1,0 +1,76 @@
+$three-min: 560px;
+$wide-min: 1040px;
+
+.page {
+  display: grid;
+  gap: var(--space-6);
+  container: dashboard / inline-size;
+}
+
+.content {
+  display: grid;
+  gap: var(--space-4);
+  transition: opacity var(--duration-normal) var(--easing);
+}
+
+.refreshing {
+  opacity: 0.55;
+}
+
+.alert {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-negative-bg);
+  border-radius: var(--radius-md);
+}
+
+.grid,
+.skeletonGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-4);
+
+  @container dashboard (width >= #{$wide-min}) {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+  }
+}
+
+@container dashboard (width >= #{$wide-min}) {
+  .queue,
+  .debtAge {
+    grid-column: span 4;
+  }
+
+  .collection,
+  .districts {
+    grid-column: span 8;
+  }
+
+  .benefits,
+  .channels,
+  .skeletonWidget {
+    grid-column: span 6;
+  }
+
+  .full {
+    grid-column: 1 / -1;
+  }
+}
+
+.kpiSkeleton {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-3);
+
+  @container dashboard (width >= #{$three-min}) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  @container dashboard (width >= #{$wide-min}) {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+}

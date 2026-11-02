@@ -1,0 +1,161 @@
+@use 'breakpoints';
+
+.root {
+  position: relative;
+  height: 100%;
+  min-height: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius-md);
+  background-color: var(--color-bg-surface);
+  font-size: var(--font-size-sm);
+
+  &:focus-visible {
+    outline: var(--focus-ring-width) solid var(--color-focus-ring);
+    outline-offset: var(--focus-ring-offset);
+  }
+}
+
+.content {
+  min-width: var(--citizen-table-min-width);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: var(--citizen-table-columns);
+  align-items: center;
+}
+
+.head {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  border-bottom: var(--border-width) solid var(--color-border);
+  background-color: var(--color-bg-muted);
+  color: var(--color-text-secondary);
+  font-weight: var(--font-weight-medium);
+}
+
+.th {
+  display: flex;
+  min-width: 0;
+  padding: var(--space-2) var(--space-3);
+}
+
+.headerLabel {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sortButton {
+  display: inline-flex;
+  gap: var(--space-1);
+  align-items: center;
+  max-width: 100%;
+  min-height: var(--size-target-min);
+  margin: calc(-1 * var(--space-1));
+  padding: var(--space-1);
+  border: 0;
+  border-radius: var(--radius-xs);
+  background: none;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+
+  &:focus-visible {
+    outline: var(--focus-ring-width) solid var(--color-focus-ring);
+    outline-offset: 0;
+  }
+
+  @include breakpoints.hover {
+    &:hover {
+      background-color: var(--color-bg-hover);
+      color: var(--color-text-primary);
+    }
+  }
+}
+
+.sortIcon {
+  flex-shrink: 0;
+  color: var(--color-text-tertiary);
+}
+
+.sortButtonActive {
+  color: var(--color-text-primary);
+
+  .sortIcon {
+    color: inherit;
+  }
+}
+
+.body {
+  position: relative;
+  transition: opacity var(--duration-fast) var(--easing);
+}
+
+.refreshing {
+  opacity: 0.6;
+}
+
+.bodyRow {
+  min-height: var(--control-height-md);
+  border-bottom: var(--border-width) solid var(--color-border);
+}
+
+.virtualRow {
+  position: absolute;
+  top: 0;
+  inset-inline: 0;
+  cursor: default;
+  user-select: none;
+
+  @include breakpoints.hover {
+    &:hover {
+      background-color: var(--color-bg-hover);
+    }
+  }
+}
+
+.selected,
+.selected:hover {
+  background-color: var(--color-bg-active);
+  box-shadow: inset var(--border-width-accent) 0 0 var(--color-accent);
+
+  @include breakpoints.forced-colors-selected;
+}
+
+.td {
+  min-width: 0;
+  padding: var(--space-2) var(--space-3);
+  overflow: hidden;
+  color: var(--color-text-primary);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.end {
+  justify-content: flex-end;
+  text-align: end;
+}
+
+.name {
+  font-weight: var(--font-weight-semibold);
+}
+
+.numeric {
+  font-variant-numeric: tabular-nums;
+}
+
+.muted {
+  color: var(--color-text-tertiary);
+}
+
+.empty {
+  grid-column: 1 / -1;
+  padding-block: var(--space-6);
+  color: var(--color-text-secondary);
+  text-align: center;
+}

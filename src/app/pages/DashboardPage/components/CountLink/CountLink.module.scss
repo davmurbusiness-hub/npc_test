@@ -1,0 +1,25 @@
+.value {
+  font-variant-numeric: tabular-nums;
+}
+
+.link {
+  color: var(--color-link);
+  text-decoration: underline;
+  text-decoration-thickness: from-font;
+  text-underline-offset: 0.2em;
+
+  &:hover {
+    color: var(--color-link-hover);
+  }
+
+  &:focus-visible {
+    outline: var(--focus-ring-width) solid var(--color-focus-ring);
+    outline-offset: var(--focus-ring-offset);
+    border-radius: var(--radius-xs);
+  }
+}
+
+.link.negative {
+  color: var(--text-color-negative);
+  font-weight: var(--font-weight-semibold);
+}

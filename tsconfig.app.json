@@ -8,24 +8,34 @@
     "allowArbitraryExtensions": true,
     "skipLibCheck": true,
 
-    /* Bundler mode */
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
     "verbatimModuleSyntax": true,
     "moduleDetection": "force",
+    "resolveJsonModule": true,
     "noEmit": true,
     "jsx": "react-jsx",
 
-    /* Linting */
+    "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "erasableSyntaxOnly": true,
     "noFallthroughCasesInSwitch": true,
+    "noUncheckedSideEffectImports": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitOverride": true,
+    "erasableSyntaxOnly": true,
 
     "paths": {
+      "api": ["./src/app/api"],
+      "api/*": ["./src/app/api/*"],
       "components": ["./src/app/components"],
       "components/*": ["./src/app/components/*"],
+      "config/*": ["./src/config/*"],
+      "data/*": ["./src/app/data/*"],
       "hooks/*": ["./src/app/hooks/*"],
+      "layouts/*": ["./src/app/layouts/*"],
+      "pages/*": ["./src/app/pages/*"],
+      "stores/*": ["./src/app/stores/*"],
       "styles/*": ["./src/app/styles/*"],
       "types/*": ["./src/app/types/*"],
       "utils/*": ["./src/app/utils/*"]

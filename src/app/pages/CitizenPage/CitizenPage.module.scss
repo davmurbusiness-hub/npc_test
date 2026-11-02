@@ -1,0 +1,28 @@
+@use 'breakpoints';
+
+.page {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-4);
+  align-content: start;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(180px, 220px) minmax(0, 1fr);
+  gap: var(--space-4);
+  align-items: start;
+
+  @include breakpoints.mobile {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.nav {
+  position: sticky;
+  inset-block-start: calc(var(--control-height-md) + 2 * var(--space-2));
+
+  @include breakpoints.mobile {
+    position: static;
+  }
+}

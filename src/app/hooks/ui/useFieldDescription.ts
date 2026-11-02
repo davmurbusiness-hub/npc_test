@@ -1,7 +1,7 @@
 import { useId } from 'react';
 
-import { isEmptyNode } from 'utils/isEmptyNode';
-import { textOrNull } from 'utils/textOrNull';
+import { isEmptyNode } from 'utils/dom';
+import { textOrNull } from 'utils/format';
 
 import type { ReactNode } from 'react';
 

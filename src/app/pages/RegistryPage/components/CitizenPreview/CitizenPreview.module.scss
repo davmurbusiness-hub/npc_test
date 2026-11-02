@@ -1,0 +1,155 @@
+@use 'breakpoints';
+
+.root {
+  box-sizing: border-box;
+  height: 100%;
+  min-width: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+  padding: var(--space-5);
+  background: var(--color-bg-surface);
+
+  @include breakpoints.mobile {
+    padding: var(--space-4);
+  }
+}
+
+.content {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-5);
+  animation: appear var(--duration-normal) var(--easing);
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+.placeholder {
+  height: 100%;
+  align-content: center;
+}
+
+.header {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: var(--space-3);
+  align-items: start;
+}
+
+.identity {
+  display: grid;
+  gap: var(--space-1);
+  min-width: 0;
+  padding-block-start: var(--space-1);
+}
+
+.name {
+  line-height: var(--line-height-tight);
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  align-items: center;
+}
+
+.skeletonMeta {
+  margin-block-start: var(--space-1);
+}
+
+.toolbar {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.open {
+  width: 100%;
+}
+
+.tiles {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-2);
+
+  > :first-child {
+    grid-column: 1 / -1;
+  }
+}
+
+.tileValue {
+  font-size: var(--font-size-xl);
+
+  @include breakpoints.mobile {
+    font-size: var(--font-size-lg);
+  }
+}
+
+.section {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-2);
+}
+
+.sectionTitle {
+  display: flex;
+  gap: var(--space-2);
+  align-items: baseline;
+}
+
+.list {
+  display: grid;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.item {
+  display: grid;
+  gap: var(--space-1);
+  min-width: 0;
+  padding: var(--space-3);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.itemTop {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-2);
+  align-items: center;
+  justify-content: space-between;
+  min-width: 0;
+}
+
+.link {
+  color: var(--color-link);
+  text-decoration: none;
+  border-radius: var(--radius-xs);
+
+  @include breakpoints.hover {
+    &:hover {
+      color: var(--color-link-hover);
+      text-decoration: underline;
+    }
+  }
+
+  &:focus-visible {
+    outline: var(--focus-ring-width) solid var(--color-focus-ring);
+    outline-offset: var(--focus-ring-offset);
+  }
+}
+
+@keyframes appear {
+  from {
+    opacity: 0;
+    transform: translateY(var(--space-1));
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}

@@ -28,13 +28,13 @@ export function KeyValueList({ items, className }: KeyValueListProps) {
     <dl className={cn(styles.root, className)}>
       {items.map(({ id, label, value, hint }) => (
         <div key={id} className={styles.row}>
-          <Text as="dt" size="sm" color="secondary" wrap="normal" className={styles.label}>
+          <Text as="dt" size="sm" color="secondary" className={styles.label}>
             {label}
           </Text>
-          <Text as="dd" size="sm" wrap="normal" className={styles.value}>
+          <Text as="dd" size="sm" className={styles.value}>
             {value ?? <NoData />}
             {hint ? (
-              <Text as="span" size="xs" color="tertiary" wrap="normal" className={styles.hint}>
+              <Text as="span" size="xs" color="tertiary" className={styles.hint}>
                 {hint}
               </Text>
             ) : null}

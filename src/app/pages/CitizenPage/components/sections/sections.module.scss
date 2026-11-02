@@ -1,0 +1,42 @@
+@use 'breakpoints';
+
+.panel {
+  display: grid;
+  gap: var(--space-6);
+  align-content: start;
+  min-width: 0;
+  padding: var(--space-5);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-bg-surface);
+
+  &:focus-visible {
+    outline: var(--focus-ring-width) solid var(--color-focus-ring);
+    outline-offset: var(--focus-ring-offset);
+  }
+
+  @include breakpoints.mobile {
+    padding: var(--space-4);
+  }
+}
+
+.computed {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.tiles {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+  gap: var(--space-2);
+}
+
+.link {
+  color: var(--color-link);
+
+  @include breakpoints.hover {
+    &:hover {
+      color: var(--color-link-hover);
+    }
+  }
+}

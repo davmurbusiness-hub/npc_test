@@ -3,6 +3,5 @@ export type {
   DataTableAlign,
   DataTableCaptionVisibility,
   DataTableColumn,
-  DataTableNarrowLayout,
   DataTableProps,
 } from './DataTable';

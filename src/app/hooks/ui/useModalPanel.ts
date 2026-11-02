@@ -1,7 +1,6 @@
 import { useEffect, useEffectEvent, useLayoutEffect, useRef, useState } from 'react';
 
-import { trapTab } from 'utils/focusable';
-import { lock, unlock } from 'utils/scrollLock';
+import { trapTab, lock, unlock } from 'utils/dom';
 
 import type { AnimationEvent, MouseEvent, PointerEvent, RefObject } from 'react';
 

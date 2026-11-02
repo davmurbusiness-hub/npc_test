@@ -4,7 +4,6 @@ import { useEffect, useEffectEvent, useState } from 'react';
 import { Icon } from 'components/Icon';
 import { IconButton } from 'components/IconButton';
 import { Text } from 'components/Text';
-import { pickOwn } from 'utils/pickOwn';
 
 import styles from './Toast.module.scss';
 
@@ -13,24 +12,11 @@ export type ToastTone = 'info' | 'negative';
 export interface ToastProps {
   tone: ToastTone;
   text: string;
-
   onDismiss: () => void;
   className?: string;
 }
 
-export const TOAST_AUTO_DISMISS_MS = 5000;
-
-interface ToneView {
-  role: 'status' | 'alert';
-  negative: boolean;
-}
-
-const TONE_VIEW = {
-  info: { role: 'status', negative: false },
-  negative: { role: 'alert', negative: true },
-} satisfies Record<ToastTone, ToneView>;
-
-const FALLBACK_VIEW: ToneView = TONE_VIEW.info;
+const AUTO_DISMISS_MS = 5000;
 
 export function Toast({ tone, text, onDismiss, className }: ToastProps) {
   const [hovered, setHovered] = useState(false);
@@ -45,18 +31,18 @@ export function Toast({ tone, text, onDismiss, className }: ToastProps) {
     if (paused) return;
     const timer = setTimeout(() => {
       dismiss();
-    }, TOAST_AUTO_DISMISS_MS);
+    }, AUTO_DISMISS_MS);
     return () => {
       clearTimeout(timer);
     };
   }, [paused]);
 
-  const view = pickOwn(TONE_VIEW, tone, FALLBACK_VIEW);
+  const negative = tone === 'negative';
 
   return (
     <div
-      className={cn(styles.toast, view.negative && styles.negative, className)}
-      role={view.role}
+      className={cn(styles.toast, negative && styles.negative, className)}
+      role={negative ? 'alert' : 'status'}
       onMouseEnter={() => {
         setHovered(true);
       }}
@@ -77,19 +63,10 @@ export function Toast({ tone, text, onDismiss, className }: ToastProps) {
       }}
     >
       <span className={styles.icon}>
-        <Icon name={view.negative ? 'alert' : 'info'} size="md" />
+        <Icon name={negative ? 'alert' : 'info'} size="md" />
       </span>
-      <Text size="sm" wrap="normal">
-        {text}
-      </Text>
-      <IconButton
-        icon="close"
-        label="Закрыть сообщение"
-        size="sm"
-        onClick={() => {
-          onDismiss();
-        }}
-      />
+      <Text size="sm">{text}</Text>
+      <IconButton icon="close" label="Закрыть сообщение" size="sm" onClick={onDismiss} />
     </div>
   );
 }

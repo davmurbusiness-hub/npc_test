@@ -1,0 +1,15 @@
+.name {
+  color: var(--color-link);
+  font-weight: var(--font-weight-medium);
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+  &:focus-visible {
+    outline: var(--focus-ring-width) solid var(--color-focus-ring);
+    outline-offset: var(--focus-ring-offset);
+    border-radius: var(--radius-xs);
+  }
+}

@@ -1,0 +1,29 @@
+@use 'breakpoints';
+
+.root {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  align-items: center;
+  padding: var(--space-3) var(--space-4);
+  border: var(--border-width) solid var(--color-warning);
+  border-radius: var(--radius-md);
+  background: var(--color-warning-bg);
+}
+
+.text {
+  display: grid;
+  flex: 1 1 260px;
+  gap: var(--space-0-5);
+  min-width: 0;
+}
+
+.link {
+  color: var(--color-link);
+
+  @include breakpoints.hover {
+    &:hover {
+      color: var(--color-link-hover);
+    }
+  }
+}

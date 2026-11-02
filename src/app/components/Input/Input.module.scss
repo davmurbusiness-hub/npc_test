@@ -20,12 +20,10 @@
   min-width: 0;
   height: var(--control-height-lg);
   padding: 0 var(--space-4);
-
   border: var(--border-width) solid var(--color-border-input);
   border-radius: var(--radius-md);
   font-family: var(--font-family-base);
   font-size: var(--font-size-md);
-
   color: var(--color-text-primary);
   background-color: var(--color-bg-surface);
   transition: border-color var(--duration-fast) var(--easing);
