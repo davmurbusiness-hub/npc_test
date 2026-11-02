@@ -1,4 +1,4 @@
-import type { IsoDate, IsoDateTime, YearMonth } from 'types/common';
+import type { IsoDate, IsoDateTime } from 'types/common';
 
 export interface Civil {
   year: number;
@@ -80,23 +80,4 @@ export function ageInYears(birthDays: number, onDays: number): number {
   const on = civilFromDays(onDays);
   const beforeBirthday = on.month < birth.month || (on.month === birth.month && on.day < birth.day);
   return on.year - birth.year - (beforeBirthday ? 1 : 0);
-}
-
-export function periodIndexOfDays(days: number): number {
-  const { year, month } = civilFromDays(days);
-  return year * 12 + month - 1;
-}
-
-export function periodIndex(period: YearMonth): number {
-  return Number(period.slice(0, 4)) * 12 + Number(period.slice(5, 7)) - 1;
-}
-
-export function periodFromIndex(index: number): YearMonth {
-  const year = Math.floor(index / 12);
-  return `${String(year).padStart(4, '0')}-${pad2(index - year * 12 + 1)}`;
-}
-
-export function periodStartDays(index: number): number {
-  const year = Math.floor(index / 12);
-  return daysFromCivil(year, index - year * 12 + 1, 1);
 }

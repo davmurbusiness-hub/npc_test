@@ -7,7 +7,7 @@ import type { DictionaryKey } from 'types/dictionaries';
 import type { CitizenFilters } from 'types/registry';
 import { daysFilter, listFilter, rangeFilter, switchFilter, withFilter } from 'utils/registry';
 import type { FilterKey, ListFilterKey } from 'utils/registry';
-import { DEBT_AGE_OPTIONS, EXPIRY_KIND_OPTIONS, optionLabel } from 'utils/ui';
+import { EXPIRY_KIND_OPTIONS, optionLabel } from 'utils/ui';
 
 import styles from './ActiveFilterChips.module.scss';
 
@@ -23,19 +23,11 @@ const CHIP_ORDER: readonly FilterKey[] = [
   'districtIds',
   'gender',
   'age',
-  'hasDebt',
-  'debtAge',
-  'objectTypes',
-  'hasAnyBenefit',
-  'benefitKinds',
-  'benefitVerification',
   'expiringKinds',
   'expiringWithinDays',
   'contactChannels',
   'noContactDays',
-  'deliveryFailed',
   'noContact',
-  'unreachable',
   'specialNeeds',
   'tags',
   'responsibleIds',
@@ -95,21 +87,6 @@ function chipText(filters: CitizenFilters, key: FilterKey): ChipText | null {
       if (max !== null) return plain(`Возраст: до ${max}`);
       return null;
     }
-    case 'benefitKinds':
-      return dictListText(filters, key, 'Льготы', 'benefitKind');
-    case 'benefitVerification':
-      return dictListText(filters, key, 'Проверка льгот', 'benefitVerification');
-    case 'hasAnyBenefit':
-      return switchFilter(filters, key) ? plain('Есть подтверждённая льгота') : null;
-    case 'objectTypes':
-      return dictListText(filters, key, 'Тип объекта', 'objectType');
-    case 'hasDebt':
-      return switchFilter(filters, key) ? plain('Есть долг') : null;
-    case 'debtAge':
-      return listText(
-        'Давность долга',
-        listFilter(filters, key).map((code) => optionLabel(DEBT_AGE_OPTIONS, code))
-      );
     case 'tags':
       return dictListText(filters, key, 'Метки', 'citizenTag');
     case 'responsibleIds':
@@ -123,12 +100,8 @@ function chipText(filters: CitizenFilters, key: FilterKey): ChipText | null {
       return daysText(daysFilter(filters, key), (days) => `Срок истекает ≤ ${days} дн`);
     case 'noContactDays':
       return daysText(daysFilter(filters, key), (days) => `Без контакта > ${days} дн`);
-    case 'deliveryFailed':
-      return switchFilter(filters, key) ? plain('Ошибка доставки') : null;
     case 'noContact':
       return switchFilter(filters, key) ? plain('Нет телефона и email') : null;
-    case 'unreachable':
-      return switchFilter(filters, key) ? plain('Недоступен для уведомления') : null;
     case 'onReviewDays':
       return daysText(daysFilter(filters, key), (days) => `На проверке > ${days} дн`);
     case 'reviewReasons':

@@ -28,38 +28,11 @@ export type CardSource =
   | 'legacyMigration';
 
 export type AddressType = 'registration' | 'residence' | 'mailing';
-export type ObjectType = 'apartmentBuilding' | 'privateHouse' | 'gardenHouse' | 'nonResidential';
-export type RightType = 'ownership' | 'socialRent' | 'lease';
-export type WasteAccumulation = 'containerSite' | 'bunker' | 'chute' | 'bags';
-export type Weekday = 'mon' | 'tue' | 'wed' | 'thu' | 'fri' | 'sat' | 'sun';
 export type ContractStatus = 'active' | 'notConcluded' | 'terminated';
 export type ConclusionMethod = 'govServices' | 'office' | 'online';
 export type FamilyRelation = 'spouse' | 'child' | 'parent' | 'sibling' | 'other';
 export type FamilyResidence = 'permanent' | 'temporarilyAbsent';
 export type FamilyCategory = 'preschooler' | 'schoolchild' | 'student' | 'working' | 'pensioner';
-export type EducationLevel =
-  'secondary' | 'vocational' | 'bachelor' | 'specialist' | 'master' | 'postgraduate';
-export type StudyForm = 'fullTime' | 'partTime' | 'extramural';
-export type EducationStatus = 'graduated' | 'studying' | 'notGraduated';
-export type EmploymentType = 'hired' | 'selfEmployed' | 'individualEntrepreneur';
-export type BenefitKind =
-  'laborVeteran' | 'largeFamily' | 'disabled' | 'pensioner' | 'lowIncome' | 'combatVeteran';
-export type BenefitBeneficiary = 'applicant' | 'familyMember';
-export type BenefitVerification = 'confirmed' | 'onReview' | 'expired' | 'rejected';
-export type RepresentativeType = 'powerOfAttorney' | 'guardian' | 'legalRepresentative';
-export type RepresentativePower =
-  'contracts' | 'payments' | 'documents' | 'correspondence' | 'fullRepresentation';
-export type RepresentativeStatus = 'active' | 'expired' | 'revoked';
-export type PaymentMethod = 'online' | 'bank' | 'cashDesk' | 'autopay';
-export type PaymentStatus = 'paid' | 'partial' | 'debt';
-export type NotificationChannel = 'sms' | 'email' | 'post' | 'personalAccount';
-export type NotificationType = 'receipt' | 'debtReminder' | 'information';
-export type DeliveryStatus = 'delivered' | 'error' | 'unread';
-export type DeliveryError =
-  'numberUnavailable' | 'mailboxNotExists' | 'postReturn' | 'accountNotOpened';
-export type AttachmentType =
-  'passportScan' | 'egrnExtract' | 'receipt' | 'certificate' | 'powerOfAttorney';
-export type AttachmentTarget = 'card' | 'object' | 'benefit' | 'representative';
 
 export type DictionaryKey =
   | 'cardStatus'
@@ -79,43 +52,17 @@ export type DictionaryKey =
   | 'archiveReason'
   | 'cardSource'
   | 'addressType'
-  | 'objectType'
-  | 'rightType'
-  | 'wasteAccumulation'
-  | 'weekday'
   | 'contractStatus'
   | 'conclusionMethod'
   | 'familyRelation'
   | 'familyResidence'
   | 'familyCategory'
-  | 'educationLevel'
-  | 'studyForm'
-  | 'educationStatus'
-  | 'employmentType'
-  | 'benefitKind'
-  | 'benefitBeneficiary'
-  | 'benefitVerification'
-  | 'representativeType'
-  | 'representativePower'
-  | 'representativeStatus'
-  | 'paymentMethod'
-  | 'paymentStatus'
-  | 'notificationChannel'
-  | 'notificationType'
-  | 'deliveryStatus'
-  | 'deliveryError'
-  | 'attachmentType'
-  | 'attachmentTarget'
   | 'district'
   | 'region'
   | 'responsible'
   | 'maritalStatus'
   | 'citizenship'
-  | 'language'
-  | 'institution'
-  | 'specialty'
-  | 'organization'
-  | 'position';
+  | 'language';
 
 export interface DictionaryItem {
   value: DictValue;
@@ -124,10 +71,8 @@ export interface DictionaryItem {
 
 export type Dictionaries = Readonly<Record<DictionaryKey, readonly DictionaryItem[]>>;
 
-export type DebtAgeBucket = 'lt1m' | 'm1to3' | 'm3to6' | 'm6to12' | 'gt12';
-export type ExpiryKind = 'document' | 'benefit' | 'powerOfAttorney' | 'consent';
+export type ExpiryKind = 'document' | 'consent';
 export type DeadlineTone = 'none' | 'soon' | 'overdue';
-export type PeriodMonths = 3 | 6 | 12;
 export type SortDirection = 'asc' | 'desc';
 
 export type StatusTransitions = Readonly<Record<CardStatus, readonly CardStatus[]>>;

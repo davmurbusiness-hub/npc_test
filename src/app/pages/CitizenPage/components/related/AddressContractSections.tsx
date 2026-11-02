@@ -1,17 +1,14 @@
 import { optionsOf } from 'api/dictionaries';
 import { Badge } from 'components/Badge';
 import type { DataTableColumn } from 'components/DataTable';
-import { NoData } from 'components/NoData';
 import type { DraftRow } from 'types/form';
-import { addressText, objectText } from 'utils/citizen';
-import { formatIsoDate, periodText, formatRubles, formatNumber } from 'utils/format';
+import { addressText } from 'utils/citizen';
+import { formatIsoDate, periodText } from 'utils/format';
 import { formatMasked } from 'utils/masks';
 import { CONTRACT_TONE, labelIn } from 'utils/ui';
 
-import { useCitizen } from '../../context';
 import { FieldGrid, fieldsOf, useFormScope } from '../fields';
 import { RelatedSection } from './RelatedSection';
-import { useRows } from './useRows';
 
 const A = fieldsOf<DraftRow<'addresses'>>();
 
@@ -74,100 +71,14 @@ export function AddressesSection() {
   );
 }
 
-const O = fieldsOf<DraftRow<'objects'>>();
-
-function ObjectForm() {
-  const addresses = useRows('addresses');
-  const addressOptions = addresses.map((row) => ({
-    value: row.id,
-    label: addressText(row) || row.id,
-  }));
-  return (
-    <>
-      <FieldGrid title="Лицевой счёт">
-        <O.Text name="accountNumber" label="№ лицевого счёта" />
-        <O.Select name="type" label="Тип объекта" options={optionsOf('objectType')} />
-        <O.Select name="addressId" label="Адрес" options={addressOptions} />
-        <O.Text name="cadastralNumber" label="Кадастровый номер" />
-      </FieldGrid>
-      <FieldGrid title="Право и проживающие">
-        <O.Number name="area" label="Площадь, м²" unit="м²" />
-        <O.Select name="rightType" label="Право" options={optionsOf('rightType')} />
-        <O.Number name="share" label="Доля, %" unit="%" />
-        <O.Number name="residentsCount" label="Число проживающих" integer />
-      </FieldGrid>
-      <FieldGrid title="Вывоз ТКО">
-        <O.Select
-          name="wasteAccumulation"
-          label="Способ накопления"
-          options={optionsOf('wasteAccumulation')}
-        />
-        <O.Text name="containerSiteNumber" label="№ площадки" />
-        <O.MultiSelect name="pickupSchedule" label="График вывоза" options={optionsOf('weekday')} />
-        <O.Number name="tariff" label="Тариф, ₽/мес" unit="₽/мес" />
-        <O.Date name="billingStartDate" label="Начало расчётов" />
-      </FieldGrid>
-    </>
-  );
-}
-
-export function ObjectsSection() {
-  const addresses = useRows('addresses');
-  const savedObjects = useCitizen((state) => state.card?.related.objects);
-  const debtOf = (id: string) => savedObjects?.find((object) => object.id === id)?.debt ?? null;
-
-  const columns: DataTableColumn<DraftRow<'objects'>>[] = [
-    { key: 'account', header: '№ ЛС', render: (row) => row.accountNumber },
-    { key: 'type', header: 'Тип', render: (row) => labelIn(optionsOf('objectType'), row.type) },
-    {
-      key: 'address',
-      header: 'Адрес',
-      render: (row) => {
-        const address = addresses.find((item) => item.id === row.addressId);
-        return address === undefined ? <NoData /> : addressText(address);
-      },
-    },
-    {
-      key: 'area',
-      header: 'Площадь',
-      align: 'end',
-      render: (row) => (row.area === null ? null : `${formatNumber(row.area, 'decimal')} м²`),
-    },
-    {
-      key: 'right',
-      header: 'Право',
-      render: (row) => labelIn(optionsOf('rightType'), row.rightType),
-    },
-    { key: 'residents', header: 'Проживает', align: 'end', render: (row) => row.residentsCount },
-    { key: 'tariff', header: 'Тариф', align: 'end', render: (row) => formatRubles(row.tariff) },
-    { key: 'debt', header: 'Долг', align: 'end', render: (row) => formatRubles(debtOf(row.id)) },
-  ];
-
-  return (
-    <RelatedSection
-      table="objects"
-      caption="Объекты и лицевые счета"
-      columns={columns}
-      emptyText="Объектов нет"
-      addLabel="Добавить объект"
-      rowLabel={objectText}
-      modalTitle={{ add: 'Новый объект', edit: 'Объект' }}
-      form={<ObjectForm />}
-    />
-  );
-}
-
 const C = fieldsOf<DraftRow<'contracts'>>();
 
 function ContractForm() {
-  const objects = useRows('objects');
   const { values } = useFormScope();
-  const objectOptions = objects.map((row) => ({ value: row.id, label: objectText(row) }));
   return (
     <>
       <FieldGrid title="Договор">
         <C.Text name="contractNumber" label="№ договора" />
-        <C.Select name="objectId" label="Объект" options={objectOptions} />
         <C.Date name="concludedAt" label="Дата заключения" />
         <C.Date name="validUntil" label="Срок действия" />
         <C.Select name="status" label="Статус" options={optionsOf('contractStatus')} />
@@ -188,17 +99,8 @@ function ContractForm() {
 }
 
 export function ContractsSection() {
-  const objects = useRows('objects');
   const columns: DataTableColumn<DraftRow<'contracts'>>[] = [
     { key: 'number', header: '№ договора', render: (row) => row.contractNumber },
-    {
-      key: 'object',
-      header: 'Объект',
-      render: (row) => {
-        const object = objects.find((item) => item.id === row.objectId);
-        return object === undefined ? <NoData /> : objectText(object);
-      },
-    },
     {
       key: 'concluded',
       header: 'Заключён',

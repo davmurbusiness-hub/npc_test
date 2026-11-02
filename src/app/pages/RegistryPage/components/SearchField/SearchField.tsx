@@ -75,7 +75,7 @@ export function SearchField({ value, onChange, className }: SearchFieldProps) {
         enterKeyHint="search"
         autoComplete="off"
         spellCheck={false}
-        placeholder="ФИО, телефон, СНИЛС или № ЛС"
+        placeholder="ФИО, телефон или СНИЛС"
         value={text}
         onChange={handleChange}
         onKeyDown={handleKeyDown}

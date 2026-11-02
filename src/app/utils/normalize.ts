@@ -41,19 +41,6 @@ export function normalizeContract(contract: DraftRow<'contracts'>): DraftRow<'co
   return row.result;
 }
 
-export function normalizeBenefit(benefit: DraftRow<'benefits'>): DraftRow<'benefits'> {
-  const row = patcher(benefit);
-  if (benefit.beneficiary !== 'familyMember') row.set('familyMemberId', null);
-  if (benefit.verification !== 'rejected') row.set('rejectionReason', null);
-  return row.result;
-}
-
-export function normalizeAttachment(attachment: DraftRow<'attachments'>): DraftRow<'attachments'> {
-  const row = patcher(attachment);
-  if (attachment.target === 'card') row.set('targetId', null);
-  return row.result;
-}
-
 function mapSame<T>(items: T[], fn: (item: T) => T): T[] {
   const next = items.map(fn);
   return next.some((item, index) => item !== items[index]) ? next : items;
@@ -62,16 +49,7 @@ function mapSame<T>(items: T[], fn: (item: T) => T): T[] {
 export function normalizeDraft(draft: CardDraft): CardDraft {
   const citizen = normalizeCitizen(draft.citizen);
   const contracts = mapSame(draft.related.contracts, normalizeContract);
-  const benefits = mapSame(draft.related.benefits, normalizeBenefit);
-  const attachments = mapSame(draft.related.attachments, normalizeAttachment);
   const { related } = draft;
-  if (
-    citizen === draft.citizen &&
-    contracts === related.contracts &&
-    benefits === related.benefits &&
-    attachments === related.attachments
-  ) {
-    return draft;
-  }
-  return { citizen, related: { ...related, contracts, benefits, attachments } };
+  if (citizen === draft.citizen && contracts === related.contracts) return draft;
+  return { citizen, related: { ...related, contracts } };
 }

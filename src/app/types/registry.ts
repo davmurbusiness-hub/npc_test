@@ -1,25 +1,14 @@
-import type { CitizenId, DictValue, IsoDate, IsoDateTime, Rubles } from './common';
+import type { CitizenId, DictValue, IsoDate, IsoDateTime } from './common';
 import type {
-  BenefitKind,
-  BenefitVerification,
   CardStatus,
   CitizenTag,
   ContactChannel,
   ExpiryKind,
   Gender,
-  ObjectType,
   ReviewReason,
   SortDirection,
   SpecialNeed,
 } from './dictionaries';
-import type { BenefitCategory } from './entities';
-
-export interface BenefitBrief {
-  kind: BenefitKind;
-  verification: BenefitVerification;
-  monthlyDiscount: Rubles;
-}
-
 export interface CitizenRow {
   id: CitizenId;
   cardNumber: string;
@@ -29,30 +18,23 @@ export interface CitizenRow {
   mobilePhone: string | null;
   districtId: DictValue | null;
   status: CardStatus;
-  benefitCategory: BenefitCategory | null;
-  debt: Rubles;
   responsibleId: DictValue;
   updatedAt: IsoDateTime;
 
   searchName: string;
   snils: string;
-  accountNumbers: string[];
 
   gender: Gender;
-  objectTypes: ObjectType[];
   tags: CitizenTag[];
   contactChannel: ContactChannel;
   specialNeeds: SpecialNeed[];
 
-  debtAgeMonths: number | null;
   lastContactAt: IsoDate | null;
   statusChangedAt: IsoDate;
   reviewReason: ReviewReason | null;
   expiresAt: Record<ExpiryKind, IsoDate | null>;
   hasValidConsent: boolean;
   hasContact: boolean;
-  lastNotificationFailed: boolean;
-  benefits: BenefitBrief[];
 }
 
 export type CitizenIndex = readonly CitizenRow[];
@@ -74,7 +56,6 @@ export type SortField =
   | 'mobilePhone'
   | 'districtId'
   | 'status'
-  | 'debt'
   | 'responsibleId'
   | 'updatedAt';
 

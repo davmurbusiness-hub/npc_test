@@ -18,7 +18,6 @@ const METRIC_HEADERS: Readonly<Record<ResponsibleLoadMetric, string>> = {
   cards: 'Карточек',
   onReview: 'На проверке',
   onReviewOver14: 'На проверке > 14 дн',
-  debtorsNoContact: 'Должники без контакта',
 };
 
 function metricColumn(metric: ResponsibleLoadMetric): DataTableColumn<ResponsibleLoad> {
@@ -52,7 +51,6 @@ export function ResponsibleLoadTable({ rows, selectedId, className }: Responsibl
     metricColumn('cards'),
     metricColumn('onReview'),
     metricColumn('onReviewOver14'),
-    metricColumn('debtorsNoContact'),
   ];
 
   return (

@@ -15,12 +15,6 @@ const expiring = (kind: ExpiryKind): CitizenFilters => ({
 
 const ITEMS: readonly { kind: ActionQueueKind; filters: CitizenFilters; tone: ToneRule }[] = [
   { kind: 'documentExpiring', filters: expiring('document'), tone: { expiry: 'document' } },
-  { kind: 'benefitExpiring', filters: expiring('benefit'), tone: { expiry: 'benefit' } },
-  {
-    kind: 'powerOfAttorneyExpiring',
-    filters: expiring('powerOfAttorney'),
-    tone: { expiry: 'powerOfAttorney' },
-  },
   { kind: 'noConsent', filters: { noValidConsent: true }, tone: 'overdue' },
   {
     kind: 'reviewOver14',
@@ -28,7 +22,6 @@ const ITEMS: readonly { kind: ActionQueueKind; filters: CitizenFilters; tone: To
     tone: 'overdue',
   },
   { kind: 'duplicatesToMerge', filters: { status: ['duplicate'] }, tone: 'none' },
-  { kind: 'deliveryErrors', filters: { deliveryFailed: true }, tone: 'none' },
 ];
 
 interface Entry {

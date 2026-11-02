@@ -1,4 +1,4 @@
-import type { IsoDate, IsoDateTime, Percent, Rubles, YearMonth } from 'types/common';
+import type { IsoDate, IsoDateTime, Percent } from 'types/common';
 
 export interface PersonName {
   lastName: string | null;
@@ -26,15 +26,6 @@ export function formatYears(years: number): string {
   return `${years} лет`;
 }
 
-export function formatDiscount(percent: number): string | null {
-  return formatNumber(percent / 100, 'percent');
-}
-
-export function formatArea(area: number): string | null {
-  const value = formatNumber(area, 'decimal');
-  return value === null ? null : `${value} м²`;
-}
-
 const sizeFormat = new Intl.NumberFormat('ru-RU', { maximumFractionDigits: 1 });
 
 export function formatFileSize(bytes: number): string {
@@ -53,56 +44,12 @@ export function periodText(from: IsoDate | null, to: IsoDate | null, open = 'б�
     .join(' ');
 }
 
-export function formatRubles(value: number | null): string | null {
-  const text = formatNumber(value, 'decimal');
-  return text === null ? null : `${text} ₽`;
-}
-
 const NO_VALUE = '—';
 
 export const formatCount = (value: number): string => formatNumber(value, 'count') ?? NO_VALUE;
 
-export const formatMoney = (value: Rubles, compact = false): string =>
-  formatNumber(value, 'money', { notation: compact ? 'compact' : 'standard' }) ?? NO_VALUE;
-
 export const formatPercent = (value: Percent | null): string =>
   value === null ? NO_VALUE : (formatNumber(value / 100, 'percent') ?? NO_VALUE);
-
-const pointsFormat = new Intl.NumberFormat('ru-RU', { maximumFractionDigits: 1 });
-
-export function formatPoints(delta: number): string {
-  const sign = delta > 0 ? '+' : delta < 0 ? '−' : '';
-  return `${sign}${pointsFormat.format(Math.abs(delta))} п. п.`;
-}
-
-const MONTH_FORMATS = {
-  name: new Intl.DateTimeFormat('ru-RU', { month: 'long', timeZone: 'UTC' }),
-  short: new Intl.DateTimeFormat('ru-RU', { month: 'short', timeZone: 'UTC' }),
-  full: new Intl.DateTimeFormat('ru-RU', { month: 'long', year: 'numeric', timeZone: 'UTC' }),
-};
-
-export function formatMonth(period: YearMonth, style: keyof typeof MONTH_FORMATS): string {
-  const date = new Date(Date.UTC(Number(period.slice(0, 4)), Number(period.slice(5, 7)) - 1, 1));
-  return MONTH_FORMATS[style].format(date);
-}
-
-const MONTH_DATIVE = [
-  'январю',
-  'февралю',
-  'марту',
-  'апрелю',
-  'маю',
-  'июню',
-  'июлю',
-  'августу',
-  'сентябрю',
-  'октябрю',
-  'ноябрю',
-  'декабрю',
-] as const;
-
-export const formatMonthDative = (period: YearMonth): string =>
-  MONTH_DATIVE[Number(period.slice(5, 7)) - 1] ?? period;
 
 export type NumberFormat = 'money' | 'percent' | 'count' | 'decimal';
 
@@ -198,8 +145,6 @@ export function formatNumber(
   const code = kind === 'money' ? normalizeCurrency(currency) : DEFAULT_CURRENCY;
   return formatterFor(kind, compact, intlSign(signDisplay), code).format(value);
 }
-
-export const round2 = (value: number): number => Math.round(value * 100) / 100;
 
 export function textOrNull(text: string | null | undefined): string | null {
   return typeof text === 'string' && text.trim() !== '' ? text : null;

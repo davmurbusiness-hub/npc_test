@@ -15,11 +15,8 @@ export function toPreview({ citizen, related }: CitizenCard): CitizenPreview {
       email: citizen.email,
       status: citizen.status,
       districtId: citizen.districtId,
-      benefitCategory: citizen.benefitCategory,
-      debt: citizen.debt,
       responsibleId: citizen.responsibleId,
     },
-    benefits: related.benefits,
-    objects: related.objects,
+    addresses: related.addresses,
   };
 }

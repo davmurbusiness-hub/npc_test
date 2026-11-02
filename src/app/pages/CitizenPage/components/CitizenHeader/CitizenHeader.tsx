@@ -1,7 +1,6 @@
-import { labelOf, formatBenefitCategory } from 'api/dictionaries';
+import { labelOf } from 'api/dictionaries';
 import { Avatar } from 'components/Avatar';
 import { Badge } from 'components/Badge';
-import { NumberText } from 'components/NumberText';
 import { StatTile } from 'components/StatTile';
 import { Text } from 'components/Text';
 import type { Citizen } from 'types/entities';
@@ -16,7 +15,6 @@ export interface CitizenHeaderProps {
 
 export function CitizenHeader({ citizen }: CitizenHeaderProps) {
   const fullName = fullNameOf(citizen);
-  const category = formatBenefitCategory(citizen.benefitCategory);
 
   return (
     <header className={styles.root}>
@@ -40,14 +38,6 @@ export function CitizenHeader({ citizen }: CitizenHeaderProps) {
         </div>
       </div>
       <div className={styles.tiles}>
-        <StatTile label="Задолженность">
-          <NumberText
-            value={citizen.debt}
-            format="money"
-            tone={citizen.debt > 0 ? 'negative' : undefined}
-          />
-        </StatTile>
-        <StatTile label="Льготная категория">{category === '' ? 'нет' : category}</StatTile>
         <StatTile label="Район">
           {citizen.districtId === null ? 'вне области' : labelOf('district', citizen.districtId)}
         </StatTile>

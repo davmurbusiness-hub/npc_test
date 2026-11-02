@@ -1,22 +1,7 @@
-import type {
-  CitizenId,
-  DictValue,
-  FileRef,
-  IsoDate,
-  IsoDateTime,
-  Percent,
-  RowId,
-  Rubles,
-  YearMonth,
-} from './common';
+import type { CitizenId, DictValue, IsoDate, IsoDateTime, RowId } from './common';
 import type {
   AddressType,
   ArchiveReason,
-  AttachmentTarget,
-  AttachmentType,
-  BenefitBeneficiary,
-  BenefitKind,
-  BenefitVerification,
   CardSource,
   CardStatus,
   CitizenTag,
@@ -25,35 +10,18 @@ import type {
   ContactChannel,
   ContractStatus,
   ConvenientTime,
-  DeliveryError,
-  DeliveryStatus,
   DisabilityGroup,
   DocumentType,
-  EducationLevel,
-  EducationStatus,
   EmploymentStatus,
-  EmploymentType,
   FamilyCategory,
   FamilyRelation,
   FamilyResidence,
   Gender,
   GovServicesAccount,
   Messenger,
-  NotificationChannel,
-  NotificationType,
-  ObjectType,
-  PaymentMethod,
-  PaymentStatus,
   ReceiptDelivery,
-  RepresentativePower,
-  RepresentativeStatus,
-  RepresentativeType,
   ReviewReason,
-  RightType,
   SpecialNeed,
-  StudyForm,
-  WasteAccumulation,
-  Weekday,
 } from './dictionaries';
 
 export interface CitizenStored {
@@ -121,17 +89,10 @@ export interface CitizenStored {
   archiveReason: ArchiveReason | null;
 }
 
-export interface BenefitCategory {
-  kind: BenefitKind;
-  extra: number;
-}
-
 export interface CitizenComputed {
   age: number;
   dependentsCount: number;
   districtId: DictValue | null;
-  benefitCategory: BenefitCategory | null;
-  debt: Rubles;
 }
 
 export type Citizen = CitizenStored & CitizenComputed;
@@ -158,26 +119,8 @@ export interface Address extends RelatedBase {
   validTo: IsoDate | null;
 }
 
-export interface PropertyObject extends RelatedBase {
-  accountNumber: string;
-  type: ObjectType;
-  addressId: RowId;
-  cadastralNumber: string | null;
-  area: number;
-  rightType: RightType;
-  share: Percent | null;
-  residentsCount: number;
-  wasteAccumulation: WasteAccumulation | null;
-  containerSiteNumber: string | null;
-  pickupSchedule: Weekday[];
-  tariff: Rubles | null;
-  billingStartDate: IsoDate | null;
-  debt: Rubles;
-}
-
 export interface Contract extends RelatedBase {
   contractNumber: string;
-  objectId: RowId;
   concludedAt: IsoDate;
   validUntil: IsoDate | null;
   status: ContractStatus;
@@ -198,104 +141,12 @@ export interface FamilyMember extends RelatedBase {
   snils: string | null;
   studyOrWorkPlace: string | null;
   isDependent: boolean;
-  objectId: RowId | null;
-}
-
-export interface Education extends RelatedBase {
-  level: EducationLevel;
-  institution: DictValue;
-  specialty: DictValue | null;
-  studyForm: StudyForm | null;
-  admissionYear: number | null;
-  graduationYear: number | null;
-  documentSeries: string | null;
-  documentNumber: string | null;
-  status: EducationStatus | null;
-}
-
-export interface Employment extends RelatedBase {
-  organization: DictValue;
-  position: DictValue | null;
-  type: EmploymentType;
-  from: IsoDate;
-  to: IsoDate | null;
-  isCurrent: boolean;
-  income: Rubles | null;
-}
-
-export interface Benefit extends RelatedBase {
-  kind: BenefitKind;
-  beneficiary: BenefitBeneficiary;
-  familyMemberId: RowId | null;
-  basisDocument: string;
-  number: string | null;
-  issuedAt: IsoDate;
-  issuedBy: string | null;
-  validFrom: IsoDate | null;
-  validTo: IsoDate | null;
-  discountPercent: Percent | null;
-  verification: BenefitVerification | null;
-  rejectionReason: string | null;
-}
-
-export interface Representative extends RelatedBase {
-  fullName: string;
-  type: RepresentativeType;
-  powerOfAttorneyNumber: string | null;
-  issuedAt: IsoDate | null;
-  validUntil: IsoDate;
-  powers: RepresentativePower[];
-  contact: string | null;
-  documentSeriesNumber: string | null;
-  status: RepresentativeStatus | null;
-}
-
-export interface Payment extends RelatedBase {
-  objectId: RowId;
-  period: YearMonth;
-  charged: Rubles;
-  discount: Rubles;
-  penalty: Rubles;
-  paid: Rubles;
-  paidAt: IsoDate | null;
-  method: PaymentMethod | null;
-  documentNumber: string | null;
-  toPay: Rubles;
-  debt: Rubles;
-  status: PaymentStatus;
-}
-
-export interface CitizenNotification extends RelatedBase {
-  sentAt: IsoDateTime;
-  channel: NotificationChannel;
-  type: NotificationType;
-  deliveryStatus: DeliveryStatus;
-  errorReason: DeliveryError | null;
-}
-
-export interface Attachment extends RelatedBase {
-  title: string;
-  type: AttachmentType;
-  target: AttachmentTarget;
-  targetId: RowId | null;
-  file: FileRef;
-  uploadedAt: IsoDateTime;
-  uploadedBy: DictValue;
-  comment: string | null;
 }
 
 export interface RelatedRowMap {
   addresses: Address;
-  objects: PropertyObject;
   contracts: Contract;
   familyMembers: FamilyMember;
-  education: Education;
-  employment: Employment;
-  benefits: Benefit;
-  representatives: Representative;
-  payments: Payment;
-  notifications: CitizenNotification;
-  attachments: Attachment;
 }
 
 export type RelatedTableKey = keyof RelatedRowMap;
@@ -322,12 +173,9 @@ export interface CitizenPreview {
     | 'email'
     | 'status'
     | 'districtId'
-    | 'benefitCategory'
-    | 'debt'
     | 'responsibleId'
   >;
-  benefits: Benefit[];
-  objects: PropertyObject[];
+  addresses: Address[];
 }
 
 export type CitizenSectionKey =

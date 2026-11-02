@@ -19,6 +19,7 @@ import {
   fieldKey,
   issueKey,
   rowTouchKey,
+  removeRow,
 } from 'utils/card';
 import {
   DEFAULT_SECTION,
@@ -29,10 +30,9 @@ import {
   newRowId,
 } from 'utils/citizen';
 import { messageOf } from 'utils/format';
-import { isoToDays, toTimestamp } from 'utils/isoDate';
 import { normalizeDraft } from 'utils/normalize';
 import type { QueryParams } from 'utils/registry';
-import { deleteBlocker, hasErrors, removeRow, validateCard, validateRow } from 'utils/validation';
+import { hasErrors, validateCard, validateRow } from 'utils/validation';
 import type { ValidationContext } from 'utils/validation';
 
 import { ROW_TEMPLATES } from './rowTemplates';
@@ -286,10 +286,7 @@ export class CitizenStore implements LocalStore {
     let row: DraftRow<K> | undefined;
     if (rowId === null) {
       const taken = [...base.related[table], ...rows].map((item) => item.id);
-      row = ROW_TEMPLATES[table](
-        { id: newRowId(this.id, table, taken), citizenId: this.id },
-        { now: this.now(), responsibleId: draft.citizen.responsibleId }
-      );
+      row = ROW_TEMPLATES[table]({ id: newRowId(this.id, table, taken), citizenId: this.id });
     } else {
       row = rows.find((item) => item.id === rowId);
     }
@@ -336,22 +333,9 @@ export class CitizenStore implements LocalStore {
     this.state.setState({ rowEditor: null });
   }
 
-  canDeleteRow(table: EditableTableKey, rowId: RowId): boolean {
-    const { draft, card } = this.state.getState();
-    if (draft === null || card === null) return false;
-    const blocker = deleteBlocker(draft, table, rowId, card.related.payments);
-    if (blocker !== null) this.toast('negative', blocker);
-    return blocker === null;
-  }
-
   deleteRow(table: EditableTableKey, rowId: RowId): boolean {
-    const { draft, card, saving } = this.state.getState();
-    if (draft === null || card === null || saving) return false;
-    const blocker = deleteBlocker(draft, table, rowId, card.related.payments);
-    if (blocker !== null) {
-      this.toast('negative', blocker);
-      return false;
-    }
+    const { draft, saving } = this.state.getState();
+    if (draft === null || saving) return false;
     this.commit(removeRow(draft, table, rowId), { touched: this.touchedWith(table, null) });
     return true;
   }
@@ -392,7 +376,6 @@ export class CitizenStore implements LocalStore {
       today: this.today,
       citizenId: this.id ?? 0,
       previousStatus: card?.citizen.status ?? draft.citizen.status ?? 'active',
-      payments: card?.related.payments ?? [],
     };
   }
 
@@ -478,13 +461,5 @@ export class CitizenStore implements LocalStore {
   private toast(tone: 'info' | 'negative', text: string): void {
     const id = `toast-${++this.sequence}`;
     this.state.setState(({ toasts }) => ({ toasts: [...toasts, { id, tone, text }] }));
-  }
-
-  private now(): string {
-    const clock = new Date();
-    return toTimestamp(
-      isoToDays(this.today),
-      clock.getHours() * 3600 + clock.getMinutes() * 60 + clock.getSeconds()
-    );
   }
 }

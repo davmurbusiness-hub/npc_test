@@ -3,10 +3,9 @@ import cn from 'classnames';
 import { DICTIONARIES } from 'api/dictionaries';
 import { Accordion } from 'components/Accordion';
 import { MultiSelect } from 'components/MultiSelect';
-import { Switch } from 'components/Switch';
 import type { CitizenFilters, FilterValue } from 'types/registry';
-import { countActiveFilters, listFilter, switchFilter, withFilter } from 'utils/registry';
-import type { FilterKey, ListFilterKey, SwitchFilterKey } from 'utils/registry';
+import { countActiveFilters, listFilter, withFilter } from 'utils/registry';
+import type { FilterKey, ListFilterKey } from 'utils/registry';
 
 import styles from './FilterPanel.module.scss';
 
@@ -27,13 +26,6 @@ export function FilterPanel({ filters, onChange, className }: FilterPanelProps) 
     value: listFilter(filters, key),
     onChange: (next: string[]) => {
       set(key, next);
-    },
-  });
-
-  const toggle = (key: SwitchFilterKey) => ({
-    checked: switchFilter(filters, key),
-    onChange: (checked: boolean) => {
-      set(key, checked);
     },
   });
 
@@ -65,9 +57,6 @@ export function FilterPanel({ filters, onChange, className }: FilterPanelProps) 
           options={DICTIONARIES.responsible}
           {...list('responsibleIds')}
         />
-        <div className={styles.switchCell}>
-          <Switch label="Есть долг" {...toggle('hasDebt')} />
-        </div>
       </div>
     </Accordion>
   );

@@ -28,11 +28,7 @@ export function compileSearch(raw: string, nameKeys: readonly string[]): RowMatc
       if (!words.every((word) => name.includes(word))) return false;
     }
     if (byNumber) {
-      return (
-        (row.mobilePhone?.includes(phone) ?? false) ||
-        row.snils.includes(digits) ||
-        row.accountNumbers.some((account) => account.includes(digits))
-      );
+      return (row.mobilePhone?.includes(phone) ?? false) || row.snils.includes(digits);
     }
     return true;
   };

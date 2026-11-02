@@ -1,15 +1,14 @@
-import { labelOf, formatBenefitCategory } from 'api/dictionaries';
-import { NumberText } from 'components/NumberText';
+import { labelOf } from 'api/dictionaries';
 import { StatTile } from 'components/StatTile';
 import { Text } from 'components/Text';
 import type { Citizen } from 'types/entities';
+import { formatYears } from 'utils/format';
 
 import styles from './sections.module.scss';
 import { useCitizen } from '../../context';
 
 export function ComputedSection({ citizen }: { citizen: Citizen }) {
   const editing = useCitizen((state) => state.mode === 'edit');
-  const category = formatBenefitCategory(citizen.benefitCategory);
 
   return (
     <div className={styles.computed}>
@@ -17,15 +16,11 @@ export function ComputedSection({ citizen }: { citizen: Citizen }) {
         <StatTile label="Район" hint="основного адреса проживания или регистрации">
           {citizen.districtId === null ? 'вне области' : labelOf('district', citizen.districtId)}
         </StatTile>
-        <StatTile label="Льготная категория" hint="подтверждённая льгота с наибольшей скидкой">
-          {category === '' ? 'нет' : category}
+        <StatTile label="Возраст" hint="полных лет на сегодня">
+          {formatYears(citizen.age)}
         </StatTile>
-        <StatTile label="Задолженность" hint="сумма долгов по платежам всех объектов">
-          <NumberText
-            value={citizen.debt}
-            format="money"
-            tone={citizen.debt > 0 ? 'negative' : undefined}
-          />
+        <StatTile label="Иждивенцы" hint="члены семьи с отметкой «иждивенец»">
+          {String(citizen.dependentsCount)}
         </StatTile>
       </div>
       {editing && (

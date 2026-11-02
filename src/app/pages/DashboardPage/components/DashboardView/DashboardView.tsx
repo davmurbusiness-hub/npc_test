@@ -1,5 +1,4 @@
 import cn from 'classnames';
-import { useRef } from 'react';
 
 import { Button } from 'components/Button';
 import { EmptyState } from 'components/EmptyState';
@@ -18,7 +17,7 @@ function DashboardSkeleton() {
   return (
     <div className={styles.content} aria-hidden="true">
       <div className={styles.kpiSkeleton}>
-        {Array.from({ length: 6 }, (_, index) => (
+        {Array.from({ length: 2 }, (_, index) => (
           <Skeleton key={index} shape="block" height="md" />
         ))}
       </div>
@@ -35,15 +34,6 @@ export function DashboardView() {
   const store = useDashboardStore();
   const load = useDashboard((state) => state.load);
   const refreshing = useDashboard(selectRefreshing);
-  const collectionRef = useRef<HTMLElement>(null);
-
-  const showCollection = () => {
-    const target = collectionRef.current;
-    if (target === null) return;
-    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    target.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
-    target.focus({ preventScroll: true });
-  };
 
   let content;
   if (load.data === null) {
@@ -68,8 +58,8 @@ export function DashboardView() {
             </Button>
           </div>
         )}
-        <KpiRow kpi={load.data.kpi} onCollectionClick={showCollection} />
-        <Widgets data={load.data} collectionRef={collectionRef} />
+        <KpiRow kpi={load.data.kpi} />
+        <Widgets data={load.data} />
       </div>
     );
   }

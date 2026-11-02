@@ -76,7 +76,6 @@ const saveCard: RegistryClient['saveCard'] = async (id, changes): Promise<SaveRe
       today: DEMO_TODAY,
       citizenId: id,
       previousStatus,
-      payments: card.related.payments,
     }),
     ...originalCardIssues(draft, id, current.rows.length),
   ];
@@ -145,8 +144,8 @@ export const registryApi: RegistryClient = {
     queryClient.fetchQuery({
       queryKey: registryKeys.dashboard(query),
       queryFn: () => {
-        const { rows, aggregates } = registry();
-        return buildDashboard(rows, aggregates, DEMO_TODAY, query, demoNow(DEMO_TODAY));
+        const { rows } = registry();
+        return buildDashboard(rows, DEMO_TODAY, query, demoNow(DEMO_TODAY));
       },
     }),
 };

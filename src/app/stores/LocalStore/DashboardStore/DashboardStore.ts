@@ -4,7 +4,6 @@ import type { RegistryClient } from 'api';
 import type { RootStore } from 'stores/RootStore';
 import type { DictValue, IsoDate } from 'types/common';
 import type { DashboardFilters } from 'types/dashboard';
-import type { PeriodMonths } from 'types/dictionaries';
 import type { LocalStore } from 'types/store';
 import {
   EMPTY_DASHBOARD_FILTERS,
@@ -76,10 +75,6 @@ export class DashboardStore implements LocalStore {
 
   setResponsible(responsibleId: DictValue | null): void {
     this.write({ responsibleId });
-  }
-
-  setPeriod(periodMonths: PeriodMonths): void {
-    this.write({ periodMonths });
   }
 
   retry(): void {

@@ -1,6 +1,6 @@
 import type { CitizenId, IsoDate, RowId } from 'types/common';
 import type { CardStatus } from 'types/dictionaries';
-import type { Payment, TableKey } from 'types/entities';
+import type { TableKey } from 'types/entities';
 import type { CitizenDraft, FieldIssue, IssueCode, Severity } from 'types/form';
 import { ageInYears, isoToDays } from 'utils/isoDate';
 import { isMaskComplete } from 'utils/masks';
@@ -10,7 +10,6 @@ export interface ValidationContext {
   today: IsoDate;
   citizenId: CitizenId;
   previousStatus: CardStatus;
-  payments: readonly Pick<Payment, 'objectId'>[];
 }
 
 export interface RowContext {

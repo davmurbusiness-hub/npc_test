@@ -1,8 +1,7 @@
-import type { IsoDate, Percent, Rubles } from 'types/common';
+import type { IsoDate } from 'types/common';
 import type { DashboardQuery } from 'types/dashboard';
 import type { CardStatus } from 'types/dictionaries';
 import type { CitizenFilters, CitizenRow, Drilldown, FilterValue } from 'types/registry';
-import { round2 } from 'utils/format';
 
 import { compileFilters } from '../listing/filters';
 
@@ -20,14 +19,10 @@ export interface Collector<T> {
   result(): T;
 }
 
-export const percentOf = (part: number, whole: number): Percent | null =>
-  whole === 0 ? null : round2((part / whole) * 100);
-
 export class Counter {
   readonly link: Drilldown;
   readonly matches: RowPredicate;
   count = 0;
-  private debtSum = 0;
 
   constructor(filters: CitizenFilters, todayIso: IsoDate) {
     this.link = { filters };
@@ -37,12 +32,7 @@ export class Counter {
   add(row: CitizenRow): boolean {
     if (!this.matches(row)) return false;
     this.count += 1;
-    this.debtSum += row.debt;
     return true;
-  }
-
-  get debt(): Rubles {
-    return round2(this.debtSum);
   }
 }
 

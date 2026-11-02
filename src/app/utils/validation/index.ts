@@ -3,21 +3,13 @@ import type { EditableTableKey } from 'types/storage';
 import { EDITABLE_TABLES } from 'utils/card';
 
 import { validateAddress } from './addresses';
-import { validateAttachment } from './attachments';
-import { validateBenefit } from './benefits';
 import { validateCitizen } from './citizen';
 import { validateConsistency } from './consistency';
 import { validateContract } from './contracts';
-import { validateEducation } from './education';
-import { validateEmployment } from './employment';
 import { validateFamilyMember } from './familyMembers';
-import { validateObject } from './objects';
-import { validateReferences } from './references';
-import { validateRepresentative } from './representatives';
 
 import type { RowContext, ValidationContext } from './rules';
 
-export { deleteBlocker, removeRow } from './references';
 export { ageOn, isValidSnils } from './rules';
 export type { RowContext, ValidationContext } from './rules';
 
@@ -25,14 +17,8 @@ const ROW_VALIDATORS: {
   [K in EditableTableKey]: (row: DraftRow<K>, ctx: RowContext) => FieldIssue[];
 } = {
   addresses: validateAddress,
-  objects: validateObject,
   contracts: validateContract,
   familyMembers: validateFamilyMember,
-  education: validateEducation,
-  employment: validateEmployment,
-  benefits: validateBenefit,
-  representatives: validateRepresentative,
-  attachments: validateAttachment,
 };
 
 export function validateRow<K extends EditableTableKey>(
@@ -58,7 +44,6 @@ export function validateCard(draft: CardDraft, ctx: ValidationContext): FieldIss
     ...validateCitizen(draft.citizen, ctx),
     ...EDITABLE_TABLES.flatMap((table) => validateTable(table, draft, rowCtx)),
     ...validateConsistency(draft, ctx),
-    ...validateReferences(draft, ctx),
   ];
 }
 

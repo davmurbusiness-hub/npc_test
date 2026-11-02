@@ -8,11 +8,10 @@ import { useVirtualizer } from '@tanstack/react-virtual';
 import cn from 'classnames';
 import { useEffect, useId, useLayoutEffect, useMemo, useRef, useState } from 'react';
 
-import { labelOf, formatBenefitCategory } from 'api/dictionaries';
+import { labelOf } from 'api/dictionaries';
 import { Badge } from 'components/Badge';
 import { Icon } from 'components/Icon';
 import type { IconName } from 'components/Icon';
-import { NumberText } from 'components/NumberText';
 import { Skeleton } from 'components/Skeleton';
 import type { SkeletonProps } from 'components/Skeleton';
 import type { CitizenId, IsoDate } from 'types/common';
@@ -129,21 +128,6 @@ const columns = column.columns([
       <Badge tone={STATUS_TONE[info.getValue()]}>{labelOf('cardStatus', info.getValue())}</Badge>
     ),
   }),
-  column.accessor('benefitCategory', {
-    header: 'Льготная категория',
-    enableSorting: false,
-    meta: { minWidth: 184, grow: 1 },
-    cell: (info) => textOrDash(formatBenefitCategory(info.getValue())),
-  }),
-  column.accessor('debt', {
-    header: 'Задолженность',
-    sortDescFirst: true,
-    meta: { minWidth: 176, grow: 0, align: 'end' },
-    cell: (info) => {
-      const debt = info.getValue();
-      return debt > 0 ? <NumberText value={debt} format="money" tone="negative" /> : <Dash />;
-    },
-  }),
   column.accessor('responsibleId', {
     header: 'Ответственный',
     meta: { minWidth: 168, grow: 1 },
@@ -170,7 +154,6 @@ const SORT_FIELDS: ReadonlySet<string> = new Set<SortField>([
   'mobilePhone',
   'districtId',
   'status',
-  'debt',
   'responsibleId',
   'updatedAt',
 ]);

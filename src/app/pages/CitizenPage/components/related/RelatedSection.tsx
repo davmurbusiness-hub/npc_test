@@ -68,9 +68,7 @@ export function RelatedSection<K extends EditableTableKey>({
           icon="trash"
           size="sm"
           label={`Удалить: ${rowLabel(row)}`}
-          onClick={() => {
-            if (store.canDeleteRow(table, row.id)) setDeleting(row);
-          }}
+          onClick={() => setDeleting(row)}
         />
       </span>
     ),
@@ -129,9 +127,7 @@ export function RelatedSection<K extends EditableTableKey>({
         open={deleting !== null}
         title="Удалить строку?"
         message={
-          deleting === null
-            ? ''
-            : `«${rowLabel(deleting)}» уйдёт из карточки при сохранении. Связанные вложения удалятся вместе с ней.`
+          deleting === null ? '' : `«${rowLabel(deleting)}» уйдёт из карточки при сохранении.`
         }
         confirmLabel="Удалить"
         onConfirm={() => {

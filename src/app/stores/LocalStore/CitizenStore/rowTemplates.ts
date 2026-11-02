@@ -1,16 +1,10 @@
-import type { DictValue, IsoDateTime } from 'types/common';
 import type { RelatedBase } from 'types/entities';
 import type { DraftRow } from 'types/form';
 import type { EditableTableKey } from 'types/storage';
 import { HOME_REGION } from 'utils/citizen';
 
-export interface TemplateContext {
-  now: IsoDateTime;
-  responsibleId: DictValue | null;
-}
-
 export const ROW_TEMPLATES: {
-  [K in EditableTableKey]: (base: RelatedBase, ctx: TemplateContext) => DraftRow<K>;
+  [K in EditableTableKey]: (base: RelatedBase) => DraftRow<K>;
 } = {
   addresses: (base) => ({
     ...base,
@@ -27,26 +21,9 @@ export const ROW_TEMPLATES: {
     validFrom: null,
     validTo: null,
   }),
-  objects: (base) => ({
-    ...base,
-    accountNumber: null,
-    type: null,
-    addressId: null,
-    cadastralNumber: null,
-    area: null,
-    rightType: null,
-    share: null,
-    residentsCount: 1,
-    wasteAccumulation: null,
-    containerSiteNumber: null,
-    pickupSchedule: [],
-    tariff: null,
-    billingStartDate: null,
-  }),
   contracts: (base) => ({
     ...base,
     contractNumber: null,
-    objectId: null,
     concludedAt: null,
     validUntil: null,
     status: 'active',
@@ -67,66 +44,5 @@ export const ROW_TEMPLATES: {
     snils: null,
     studyOrWorkPlace: null,
     isDependent: false,
-    objectId: null,
-  }),
-  education: (base) => ({
-    ...base,
-    level: null,
-    institution: null,
-    specialty: null,
-    studyForm: null,
-    admissionYear: null,
-    graduationYear: null,
-    documentSeries: null,
-    documentNumber: null,
-    status: null,
-  }),
-  employment: (base) => ({
-    ...base,
-    organization: null,
-    position: null,
-    type: null,
-    from: null,
-    to: null,
-    isCurrent: false,
-    income: null,
-  }),
-  benefits: (base) => ({
-    ...base,
-    kind: null,
-    beneficiary: 'applicant',
-    familyMemberId: null,
-    basisDocument: null,
-    number: null,
-    issuedAt: null,
-    issuedBy: null,
-    validFrom: null,
-    validTo: null,
-    discountPercent: null,
-    verification: 'onReview',
-    rejectionReason: null,
-  }),
-  representatives: (base) => ({
-    ...base,
-    fullName: null,
-    type: null,
-    powerOfAttorneyNumber: null,
-    issuedAt: null,
-    validUntil: null,
-    powers: [],
-    contact: null,
-    documentSeriesNumber: null,
-    status: 'active',
-  }),
-  attachments: (base, ctx) => ({
-    ...base,
-    title: null,
-    type: null,
-    target: 'card',
-    targetId: null,
-    file: null,
-    uploadedAt: ctx.now,
-    uploadedBy: ctx.responsibleId,
-    comment: null,
   }),
 };

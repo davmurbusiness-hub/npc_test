@@ -1,21 +1,15 @@
 import type { RowId, IsoDateTime } from 'types/common';
 import type { CardStatus, StatusTransitions } from 'types/dictionaries';
-import type { CitizenCard, CitizenEditable, RelatedBase } from 'types/entities';
+import type { CitizenCard, CitizenEditable, RelatedBase, RelatedTables } from 'types/entities';
 import type { CardDraft, CitizenDraft, DraftRow, RowDraft, FieldIssue } from 'types/form';
 import type { CardChanges, EditableRowMap, EditableTableKey, RowChanges } from 'types/storage';
 import { buildCard } from 'utils/citizen';
-import type { CardContext, RelatedSource } from 'utils/citizen';
+import type { CardContext } from 'utils/citizen';
 
 export const EDITABLE_TABLES: readonly EditableTableKey[] = [
   'addresses',
-  'objects',
   'contracts',
   'familyMembers',
-  'education',
-  'employment',
-  'benefits',
-  'representatives',
-  'attachments',
 ];
 
 type NonNullKeys<T> = { [K in keyof T]-?: null extends T[K] ? never : K }[keyof T];
@@ -60,29 +54,8 @@ export const CITIZEN_REQUIRED: RequiredKeys<CitizenEditable> = {
 
 export const ROW_REQUIRED: { [K in EditableTableKey]: RequiredKeys<RowFields<K>> } = {
   addresses: { type: true, isPrimary: true, region: true, city: true, street: true, house: true },
-  objects: {
-    accountNumber: true,
-    type: true,
-    addressId: true,
-    area: true,
-    rightType: true,
-    residentsCount: true,
-    pickupSchedule: true,
-  },
-  contracts: { contractNumber: true, objectId: true, concludedAt: true, status: true },
+  contracts: { contractNumber: true, concludedAt: true, status: true },
   familyMembers: { fullName: true, relation: true, birthDate: true, isDependent: true },
-  education: { level: true, institution: true },
-  employment: { organization: true, type: true, from: true, isCurrent: true },
-  benefits: { kind: true, beneficiary: true, basisDocument: true, issuedAt: true },
-  representatives: { fullName: true, type: true, validUntil: true, powers: true },
-  attachments: {
-    title: true,
-    type: true,
-    target: true,
-    file: true,
-    uploadedAt: true,
-    uploadedBy: true,
-  },
 };
 
 export function toDraft({ citizen, related }: CitizenCard): CardDraft {
@@ -94,8 +67,6 @@ export function toDraft({ citizen, related }: CitizenCard): CardDraft {
     age: _age,
     dependentsCount: _dependentsCount,
     districtId: _districtId,
-    benefitCategory: _benefitCategory,
-    debt: _debt,
     ...editable
   } = citizen;
 
@@ -103,14 +74,8 @@ export function toDraft({ citizen, related }: CitizenCard): CardDraft {
     citizen: editable,
     related: {
       addresses: related.addresses,
-      objects: related.objects.map(({ debt: _objectDebt, ...object }) => object),
       contracts: related.contracts,
       familyMembers: related.familyMembers,
-      education: related.education,
-      employment: related.employment,
-      benefits: related.benefits,
-      representatives: related.representatives,
-      attachments: related.attachments,
     },
   });
 }
@@ -286,7 +251,7 @@ function applyTable<K extends EditableTableKey>(
   table: K,
   card: CitizenCard,
   changes: CardChanges,
-  into: RelatedSource
+  into: RelatedTables
 ): void {
   Object.assign(into, { [table]: applyRows(card.related[table], changes.related?.[table]) });
 }
@@ -297,7 +262,7 @@ export function applyChanges(
   ctx: CardContext,
   updatedAt?: IsoDateTime
 ): CitizenCard {
-  const related: RelatedSource = { ...card.related };
+  const related: RelatedTables = { ...card.related };
   for (const table of EDITABLE_TABLES) applyTable(table, card, changes, related);
   const citizen = {
     ...card.citizen,
@@ -305,4 +270,12 @@ export function applyChanges(
     updatedAt: updatedAt ?? card.citizen.updatedAt,
   };
   return buildCard(citizen, related, ctx);
+}
+
+export function removeRow(draft: CardDraft, table: EditableTableKey, rowId: RowId): CardDraft {
+  return withTable(
+    draft,
+    table,
+    draft.related[table].filter((row) => row.id !== rowId)
+  );
 }

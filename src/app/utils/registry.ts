@@ -1,5 +1,5 @@
 import type { CitizenId, DictValue } from 'types/common';
-import type { DebtAgeBucket, Dictionaries, DictionaryKey, ExpiryKind } from 'types/dictionaries';
+import type { Dictionaries, DictionaryKey, ExpiryKind } from 'types/dictionaries';
 import type {
   CitizenFilters,
   FilterValue,
@@ -71,28 +71,12 @@ export const EMPTY_REGISTRY_PARAMS: RegistryParams = {
   selectedId: null,
 };
 
-export const DEBT_AGE_BUCKETS: readonly DebtAgeBucket[] = [
-  'lt1m',
-  'm1to3',
-  'm3to6',
-  'm6to12',
-  'gt12',
-];
-export const EXPIRY_KINDS: readonly ExpiryKind[] = [
-  'document',
-  'benefit',
-  'powerOfAttorney',
-  'consent',
-];
+export const EXPIRY_KINDS: readonly ExpiryKind[] = ['document', 'consent'];
 
 const LIST_FILTERS = {
   status: 'cardStatus',
   districtIds: 'district',
   gender: 'gender',
-  benefitKinds: 'benefitKind',
-  benefitVerification: 'benefitVerification',
-  objectTypes: 'objectType',
-  debtAge: DEBT_AGE_BUCKETS,
   tags: 'citizenTag',
   responsibleIds: 'responsible',
   expiringKinds: EXPIRY_KINDS,
@@ -101,14 +85,7 @@ const LIST_FILTERS = {
   specialNeeds: 'specialNeed',
 } as const satisfies Readonly<Record<string, DictionaryKey | readonly string[]>>;
 
-const SWITCH_FILTERS = [
-  'hasAnyBenefit',
-  'hasDebt',
-  'deliveryFailed',
-  'noContact',
-  'unreachable',
-  'noValidConsent',
-] as const;
+const SWITCH_FILTERS = ['noContact', 'noValidConsent'] as const;
 
 const DAYS_FILTERS = ['expiringWithinDays', 'noContactDays', 'onReviewDays'] as const;
 
@@ -125,7 +102,6 @@ const SORT_FIELDS: Readonly<Record<SortField, true>> = {
   mobilePhone: true,
   districtId: true,
   status: true,
-  debt: true,
   responsibleId: true,
   updatedAt: true,
 };

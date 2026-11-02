@@ -30,7 +30,6 @@ const FIELDS: Readonly<Record<SortField, FieldSort>> = {
     key: (row) => (row.districtId === null ? null : (DISTRICT_RANK.get(row.districtId) ?? null)),
   },
   status: { kind: 'number', key: (row) => STATUS_ORDER.get(row.status) ?? null },
-  debt: { kind: 'number', key: (row) => row.debt },
   responsibleId: { kind: 'number', key: (row) => RESPONSIBLE_RANK.get(row.responsibleId) ?? null },
   updatedAt: { kind: 'code', key: (row) => row.updatedAt },
 };

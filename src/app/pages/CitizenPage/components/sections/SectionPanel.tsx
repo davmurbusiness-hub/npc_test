@@ -4,19 +4,7 @@ import type { Citizen, SectionKey } from 'types/entities';
 import { SECTION_LABELS } from 'utils/citizen';
 
 import { useCitizen } from '../../context';
-import {
-  AddressesSection,
-  AttachmentsSection,
-  BenefitsSection,
-  ContractsSection,
-  EducationSection,
-  EmploymentSection,
-  FamilySection,
-  NotificationsSection,
-  ObjectsSection,
-  PaymentsSection,
-  RepresentativesSection,
-} from '../related';
+import { AddressesSection, ContractsSection, FamilySection } from '../related';
 import { CitizenFormScope } from './CitizenFormScope';
 import { ComputedSection } from './ComputedSection';
 import { ConsentsSection } from './ConsentsSection';
@@ -53,26 +41,10 @@ function renderSection(section: SectionKey, citizen: Citizen) {
       return <ComputedSection citizen={citizen} />;
     case 'addresses':
       return <AddressesSection />;
-    case 'objects':
-      return <ObjectsSection />;
     case 'contracts':
       return <ContractsSection />;
     case 'familyMembers':
       return <FamilySection />;
-    case 'education':
-      return <EducationSection />;
-    case 'employment':
-      return <EmploymentSection />;
-    case 'benefits':
-      return <BenefitsSection />;
-    case 'representatives':
-      return <RepresentativesSection />;
-    case 'payments':
-      return <PaymentsSection />;
-    case 'notifications':
-      return <NotificationsSection />;
-    case 'attachments':
-      return <AttachmentsSection />;
   }
 }
 

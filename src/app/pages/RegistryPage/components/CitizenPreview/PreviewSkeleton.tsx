@@ -17,11 +17,6 @@ export function PreviewSkeleton({ onClose }: { onClose: () => void }) {
         <IconButton icon="close" label="Закрыть превью" onClick={onClose} />
       </div>
       <Skeleton shape="block" height="md" />
-      <div className={styles.tiles}>
-        <Skeleton shape="block" />
-        <Skeleton shape="block" />
-        <Skeleton shape="block" />
-      </div>
       <div className={styles.section}>
         <Skeleton width="40%" />
         {ROW_WIDTHS.map((width, index) => (

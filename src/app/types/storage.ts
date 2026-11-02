@@ -1,16 +1,14 @@
 import type { CitizenId, IsoDateTime, RowId } from './common';
-import type { CitizenEditable, PropertyObject, RelatedRowMap, RelatedTableKey } from './entities';
+import type { CitizenEditable, RelatedRowMap, RelatedTableKey } from './entities';
 
 export interface RowChanges<T> {
   upserted: T[];
   deletedIds: RowId[];
 }
 
-export type EditableTableKey = Exclude<RelatedTableKey, 'payments' | 'notifications'>;
+export type EditableTableKey = RelatedTableKey;
 
-export type EditableRowMap = Omit<RelatedRowMap, 'payments' | 'notifications' | 'objects'> & {
-  objects: Omit<PropertyObject, 'debt'>;
-};
+export type EditableRowMap = RelatedRowMap;
 
 export interface CardChanges {
   citizen?: Partial<CitizenEditable>;

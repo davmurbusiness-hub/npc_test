@@ -1,20 +1,5 @@
-import type {
-  CitizenId,
-  DictValue,
-  IsoDate,
-  IsoDateTime,
-  Percent,
-  Rubles,
-  YearMonth,
-} from './common';
-import type {
-  BenefitKind,
-  ContactChannel,
-  DeadlineTone,
-  DebtAgeBucket,
-  PeriodMonths,
-  SpecialNeed,
-} from './dictionaries';
+import type { DictValue, IsoDateTime } from './common';
+import type { ContactChannel, DeadlineTone, SpecialNeed } from './dictionaries';
 import type { Drilldown } from './registry';
 
 export interface DashboardQuery {
@@ -22,22 +7,7 @@ export interface DashboardQuery {
   responsibleId: DictValue | null;
 }
 
-export type DashboardFilters = DashboardQuery & {
-  periodMonths: PeriodMonths;
-};
-
-export interface KpiDebtors {
-  count: number;
-  amount: Rubles;
-  link: Drilldown;
-}
-
-export interface KpiCollection {
-  rate: Percent | null;
-  previousRate: Percent | null;
-  delta: number | null;
-  month: YearMonth;
-}
+export type DashboardFilters = DashboardQuery;
 
 export interface KpiOnReview {
   count: number;
@@ -51,36 +21,12 @@ export interface KpiCount {
 }
 
 export interface DashboardKpi {
-  debtors: KpiDebtors;
-  collection: KpiCollection;
   onReview: KpiOnReview;
   expiring: KpiCount;
-  debtorsNoContact: KpiCount;
-  unreachable: KpiCount;
-}
-
-export interface CollectionMonth {
-  period: YearMonth;
-  charged: Rubles;
-  paidOnTime: Rubles;
-  rate: Percent | null;
-}
-
-export interface DebtAgeStat {
-  bucket: DebtAgeBucket;
-  citizens: number;
-  amount: Rubles;
-  link: Drilldown;
 }
 
 export type ActionQueueKind =
-  | 'documentExpiring'
-  | 'benefitExpiring'
-  | 'powerOfAttorneyExpiring'
-  | 'noConsent'
-  | 'reviewOver14'
-  | 'duplicatesToMerge'
-  | 'deliveryErrors';
+  'documentExpiring' | 'noConsent' | 'reviewOver14' | 'duplicatesToMerge';
 
 export interface ActionQueueItem {
   kind: ActionQueueKind;
@@ -89,47 +35,24 @@ export interface ActionQueueItem {
   link: Drilldown;
 }
 
-export interface TopDebtor {
-  id: CitizenId;
-  fullName: string;
-  districtId: DictValue | null;
-  debt: Rubles;
-  overdueMonths: number;
-  lastContactAt: IsoDate | null;
-  responsibleId: DictValue;
-}
-
 export interface DistrictStat {
   districtId: DictValue;
   citizens: number;
-  debtors: number;
-  debtorShare: Percent;
-  debtAmount: Rubles;
   link: Drilldown;
 }
 
 export interface DistrictsData {
   items: DistrictStat[];
-  averageShare: Percent | null;
+  average: number | null;
 }
 
-export interface BenefitKindStat {
-  kind: BenefitKind;
-  confirmed: number;
-  onReview: number;
-  expired: number;
-  monthlyDiscount: Rubles;
-  links: Record<'confirmed' | 'onReview' | 'expired', Drilldown>;
-}
-
-export type ResponsibleLoadMetric = 'cards' | 'onReview' | 'onReviewOver14' | 'debtorsNoContact';
+export type ResponsibleLoadMetric = 'cards' | 'onReview' | 'onReviewOver14';
 
 export interface ResponsibleLoad {
   responsibleId: DictValue;
   cards: number;
   onReview: number;
   onReviewOver14: number;
-  debtorsNoContact: number;
   links: Record<ResponsibleLoadMetric, Drilldown>;
 }
 
@@ -143,12 +66,8 @@ export interface DashboardData {
   generatedAt: IsoDateTime;
   query: DashboardQuery;
   kpi: DashboardKpi;
-  collection: CollectionMonth[];
-  debtAge: DebtAgeStat[];
   actionQueue: ActionQueueItem[];
-  topDebtors: TopDebtor[];
   districts: DistrictsData;
-  benefits: BenefitKindStat[];
   load: ResponsibleLoad[];
   channels: ChannelsData;
 }

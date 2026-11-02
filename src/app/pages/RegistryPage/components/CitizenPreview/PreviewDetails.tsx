@@ -1,37 +1,20 @@
 import { useId } from 'react';
 
-import { labelOf, formatBenefitCategory } from 'api/dictionaries';
+import { labelOf } from 'api/dictionaries';
 import { Avatar } from 'components/Avatar';
 import { Badge } from 'components/Badge';
-import type { BadgeTone } from 'components/Badge';
 import { ButtonLink } from 'components/Button';
 import { IconButton } from 'components/IconButton';
 import { KeyValueList } from 'components/KeyValueList';
 import type { KeyValueItem } from 'components/KeyValueList';
-import { NumberText } from 'components/NumberText';
-import { StatTile } from 'components/StatTile';
 import { Text } from 'components/Text';
-import type { BenefitVerification } from 'types/dictionaries';
-import type { Benefit, CitizenPreview, PropertyObject } from 'types/entities';
-import {
-  formatArea,
-  formatDiscount,
-  formatIsoDate,
-  formatYears,
-  fullNameOf,
-  textOrNull,
-} from 'utils/format';
+import type { Address, CitizenPreview } from 'types/entities';
+import { addressText } from 'utils/citizen';
+import { formatIsoDate, formatYears, fullNameOf, textOrNull } from 'utils/format';
 import { formatMasked } from 'utils/masks';
 import { STATUS_TONE } from 'utils/ui';
 
 import styles from './CitizenPreview.module.scss';
-
-const VERIFICATION_TONE: Record<BenefitVerification, BadgeTone> = {
-  confirmed: 'positive',
-  onReview: 'warning',
-  expired: 'neutral',
-  rejected: 'negative',
-};
 
 interface PreviewDetailsProps {
   preview: CitizenPreview;
@@ -40,13 +23,11 @@ interface PreviewDetailsProps {
 }
 
 export function PreviewDetails({ preview, cardHref, onClose }: PreviewDetailsProps) {
-  const { citizen, benefits, objects } = preview;
+  const { citizen, addresses } = preview;
   const fullName = fullNameOf(citizen);
-  const confirmedCount = benefits.filter((b) => b.verification === 'confirmed').length;
   const baseId = useId();
   const mainId = `${baseId}-main`;
-  const benefitsId = `${baseId}-benefits`;
-  const objectsId = `${baseId}-objects`;
+  const addressesId = `${baseId}-addresses`;
 
   return (
     <div className={styles.content}>
@@ -74,28 +55,6 @@ export function PreviewDetails({ preview, cardHref, onClose }: PreviewDetailsPro
         </ButtonLink>
       )}
 
-      <div className={styles.tiles}>
-        <StatTile label="Задолженность">
-          <span className={styles.tileValue}>
-            <NumberText
-              value={citizen.debt}
-              format="money"
-              tone={citizen.debt > 0 ? 'negative' : undefined}
-            />
-          </span>
-        </StatTile>
-        <StatTile label="Объектов">
-          <span className={styles.tileValue}>
-            <NumberText value={objects.length} format="count" />
-          </span>
-        </StatTile>
-        <StatTile label="Льгот подтверждено" hint={`из ${benefits.length}`}>
-          <span className={styles.tileValue}>
-            <NumberText value={confirmedCount} format="count" />
-          </span>
-        </StatTile>
-      </div>
-
       <section className={styles.section} aria-labelledby={mainId}>
         <Text as="h3" id={mainId} size="md" weight="semibold">
           Основные сведения
@@ -103,31 +62,16 @@ export function PreviewDetails({ preview, cardHref, onClose }: PreviewDetailsPro
         <KeyValueList items={mainItems(citizen)} />
       </section>
 
-      <section className={styles.section} aria-labelledby={benefitsId}>
-        <SectionTitle id={benefitsId} title="Льготы" count={benefits.length} />
-        {benefits.length === 0 ? (
+      <section className={styles.section} aria-labelledby={addressesId}>
+        <SectionTitle id={addressesId} title="Адреса" count={addresses.length} />
+        {addresses.length === 0 ? (
           <Text size="sm" color="secondary">
-            Льгот нет
+            Адресов нет
           </Text>
         ) : (
           <ul className={styles.list}>
-            {benefits.map((benefit) => (
-              <BenefitItem key={benefit.id} benefit={benefit} />
-            ))}
-          </ul>
-        )}
-      </section>
-
-      <section className={styles.section} aria-labelledby={objectsId}>
-        <SectionTitle id={objectsId} title="Объекты и лицевые счета" count={objects.length} />
-        {objects.length === 0 ? (
-          <Text size="sm" color="secondary">
-            Объектов нет
-          </Text>
-        ) : (
-          <ul className={styles.list}>
-            {objects.map((object) => (
-              <ObjectItem key={object.id} object={object} />
+            {addresses.map((address) => (
+              <AddressItem key={address.id} address={address} />
             ))}
           </ul>
         )}
@@ -188,61 +132,19 @@ function mainItems(citizen: CitizenPreview['citizen']): KeyValueItem[] {
       label: 'Ответственный',
       value: textOrNull(labelOf('responsible', citizen.responsibleId)),
     },
-    {
-      id: 'benefitCategory',
-      label: 'Льготная категория',
-      value:
-        citizen.benefitCategory === null ? 'Нет' : formatBenefitCategory(citizen.benefitCategory),
-    },
   ];
 }
 
-function BenefitItem({ benefit }: { benefit: Benefit }) {
-  const discount =
-    benefit.discountPercent === null ? null : formatDiscount(benefit.discountPercent);
-  const until = benefit.validTo === null ? 'бессрочно' : `по ${formatIsoDate(benefit.validTo)}`;
-
+function AddressItem({ address }: { address: Address }) {
   return (
     <li className={styles.item}>
       <div className={styles.itemTop}>
         <Text as="span" size="sm" weight="medium">
-          {labelOf('benefitKind', benefit.kind)}
-        </Text>
-        {benefit.verification !== null && (
-          <Badge tone={VERIFICATION_TONE[benefit.verification]}>
-            {labelOf('benefitVerification', benefit.verification)}
-          </Badge>
-        )}
-      </div>
-      <Text as="span" size="xs" color="secondary">
-        {discount !== null && `Скидка ${discount} · `}
-        Действует {until}
-      </Text>
-    </li>
-  );
-}
-
-function ObjectItem({ object }: { object: PropertyObject }) {
-  const area = formatArea(object.area);
-
-  return (
-    <li className={styles.item}>
-      <div className={styles.itemTop}>
-        <Text as="span" size="sm" weight="medium">
-          ЛС {object.accountNumber}
-        </Text>
-        <Text as="span" size="sm" color="secondary">
-          долг{' '}
-          <NumberText
-            value={object.debt}
-            format="money"
-            tone={object.debt > 0 ? 'negative' : 'secondary'}
-          />
+          {labelOf('addressType', address.type)}
         </Text>
       </div>
       <Text as="span" size="xs" color="secondary">
-        {labelOf('objectType', object.type)}
-        {area !== null && ` · ${area}`}
+        {addressText(address)}
       </Text>
     </li>
   );
