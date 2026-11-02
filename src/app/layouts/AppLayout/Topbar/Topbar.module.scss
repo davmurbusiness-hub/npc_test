@@ -1,0 +1,35 @@
+@use 'breakpoints';
+
+.topbar {
+  position: sticky;
+  inset-block-start: 0;
+  z-index: var(--z-sticky);
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-6);
+  background: var(--color-bg-topbar);
+  backdrop-filter: blur(var(--blur-glass));
+
+  @include breakpoints.mobile {
+    padding-inline: var(--space-4);
+  }
+}
+
+.spacer {
+  flex: 1;
+}
+
+.user {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.userText {
+  display: grid;
+
+  @include breakpoints.mobile {
+    display: none;
+  }
+}
