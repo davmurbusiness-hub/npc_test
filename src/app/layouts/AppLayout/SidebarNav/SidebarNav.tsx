@@ -1,10 +1,10 @@
 import cn from 'classnames';
 import { NavLink } from 'react-router';
 
-import { Icon } from 'src/app/components/Icon';
-import type { IconName } from 'src/app/components/Icon';
+import { Icon } from 'components/Icon';
+import type { IconName } from 'components/Icon';
 
-import { PATHS } from 'src/config/paths';
+import { PATHS } from 'config/paths';
 
 import styles from './SidebarNav.module.scss';
 

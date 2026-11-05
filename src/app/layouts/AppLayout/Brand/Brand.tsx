@@ -1,4 +1,4 @@
-import { Text } from 'src/app/components/Text';
+import { Text } from 'components/Text';
 
 import styles from './Brand.module.scss';
 

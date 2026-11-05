@@ -1,7 +1,7 @@
-import { Avatar } from 'src/app/components/Avatar';
-import { IconButton } from 'src/app/components/IconButton';
-import { Text } from 'src/app/components/Text';
-import { useTheme } from 'src/app/hooks/useTheme';
+import { Avatar } from 'components/Avatar';
+import { IconButton } from 'components/IconButton';
+import { Text } from 'components/Text';
+import { useTheme } from 'hooks/useTheme';
 
 import styles from './Topbar.module.scss';
 
